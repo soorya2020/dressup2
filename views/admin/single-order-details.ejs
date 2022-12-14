@@ -1,0 +1,218 @@
+
+<%const deliveryStatus=function(status){
+   if(status==0){
+         return `${'order cancelled'}`
+    }else if(status==1){
+        return `${'order placed'}`
+        
+    }else if(status==2){
+        return `${'order dispatched'}`
+        
+    }else if(status==3){
+        return `${'out for delivery'}`
+        
+    }else if(status==4){
+        return `${'delivered'}`
+        
+    }
+} %> 
+<section class="container-fluid">
+    <table class="table">
+        <thead class="thead-white">
+            <tr>
+                <th scope="col"></th>
+                <th scope="col"></th>
+                <th scope="col"></th>
+                <th scope="col"></th>
+            </tr>
+        </thead>
+        <tbody>
+            <% orders.forEach((order,index)=>{ %>
+                <tr>
+                    <th scope="row"> </th>
+                    <td>
+                        <h5 class="mb-4">
+                            <%= index+1 %>.<%= order.orders.productDetails.productsName %>
+                        </h5>
+                        <img class="rounded" style="width:150px ;"
+                            src="/product-images/<%=order.orders.productDetails.imageName[0]  %>" alt="">
+                    </td>
+                    <td>
+                        <div class="col text-center">
+                            Rs:<%= order.orders.productDetails.productsPrice %> x <%=
+                                    order.orders.productDetails.quantity %>
+                        </div>
+                        <div class="col mt-5 text-center">
+                            <% if(order.orders.productDetails.orderStatus==1) {%> 
+                            <a style="width:150px ;" class="btn btn-primary py-2" href="">order Placed</a>
+                                <% }else if(order.orders.productDetails.orderStatus==2) {%>
+                                    <a style="width:150px ;" class="btn btn-primary py-2" href="">order dispatched</a>
+                                    <% }else if(order.orders.productDetails.orderStatus==3) {%>
+                                        <a style="width:150px ;" class="btn btn-primary py-2" href="">out for delivery</a>
+                                        <% }else if(order.orders.productDetails.orderStatus==4) {%>
+                                            <a style="width:150px ;" class="btn btn-primary py-2" href="">delivered</a>
+                                            <% }else{ %>
+                                            <a style="width:150px ;" class="btn btn-primary py-2" href="">order Cancelled</a>
+
+                                                <% } %>     
+                            
+                        </div>
+                    </td>
+
+
+                    <td>
+                        <br>
+
+                        
+                        
+                        <%if(order.orders.productDetails.orderStatus==4){%>
+                        <%}else{%>
+                        <%if(order.orders.productDetails.orderStatus>0){%>
+                        
+                            <label>order status:</label>
+                            <select  onchange="update(this,'<%= order.orders._id%>','<%= order.orders.productDetails._id%>')">
+
+                              <option selected disabled hidden> <%= deliveryStatus( order.orders.productDetails.orderStatus  )%></option>
+
+                              <option value="1" >oder placed</option>
+                              <option value="2" >order dispatched</option>
+                              <option value="3">out for delivery</option>
+                              <option value="4" >delivered</option>
+                            </select>
+                           <%} %>
+                           <%} %>
+                            
+                        
+                          
+
+                    </td>
+
+                    <td>
+                    <%if(order.orders.productDetails.orderStatus==4){%>
+                        <%}else{%>
+                        <%if(order.orders.productDetails.orderStatus>0){%>
+                            <button onclick="cancelOrder('<%= order.orders.productDetails._id%>', '<%= order.orders._id%>')" class="btn btn-danger " id="next" >cancel Order</button>
+                            <%}else{%>
+                            <img style="width:150px ;" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTWZJD5PBopryWB_o1vo03kVAbPok7drN9XZg&usqp=CAU" alt="">
+                            <%}%>
+                            <%}%>
+                    </td>
+
+
+                </tr>
+                <% }) %>
+
+        </tbody>
+    </table>
+    <hr>
+
+    <!-- summary and bill -->
+
+    <table class="table table-borderless">
+        <thead>
+            <tr>
+                <th scope="col">
+                    <h5>shiping address</h4>
+                </th>
+                <th scope="col">
+                    <h5> payment Status / Method</h4>
+                </th>
+                <th scope="col">
+                    <h5> Total Price</h4>
+                </th>
+
+            </tr>
+
+        </thead>
+
+        <tbody>
+            <tr>
+                <th class="text-muted">
+                    <div class="col ">
+                        <%= orders[0].orders.firstName %>
+                    </div>
+                    <div class="col ">
+                        <%= orders[0].orders.shippingAddress.street %>
+                    </div>
+                    <div class="col ">
+                        <%= orders[0].orders.shippingAddress.town %> ,
+                            <%= orders[0].orders.shippingAddress.state %>,
+
+                                <%= orders[0].orders.shippingAddress.pincode %>
+                    </div>
+                    <div class="col ">
+                        <%= orders[0].orders.shippingAddress.country %> <br>
+                            <%= orders[0].orders.shippingAddress.mobile %> <br>
+                                <%= orders[0].orders.shippingAddress.email %>
+                    </div>
+
+                </th>
+                <td class="text-muted">
+                    <h5 class="text-primary">
+                        <%= orders[0].orders.paymentStatus==1? "Paid" :"Pending" %> / ( <%=orders[0].orders.paymentMethod
+                                %> )
+                    </h5>
+                </td>
+                <td class="">
+                    <h5 class="text-danger">Rs:<%= orders[0].orders.totalPrice %>
+                    </h5>
+                </td>
+
+            </tr>
+
+
+
+        </tbody>
+
+    </table>
+
+    <hr>
+
+
+
+
+</section>
+
+
+<script>
+    function update(value,orderId,prodId) {
+        
+        console.log(value.value,orderId,prodId);
+        $.ajax({
+            url:'/admin/update-order-status',
+            method:'post',
+            data:{
+                value:value.value,
+                orderId:orderId,
+                prodId:prodId
+            },
+            beforeSend:()=>{
+                return confirm('this will update the order')
+            },
+            success:(response)=>{
+               
+                location.reload()
+            }
+        })
+    }
+
+    function cancelOrder(prodId, orderId) {
+          console.log(orderId, prodId);
+
+          $.ajax({
+            url: '/cancel-order',
+            method: 'post',
+            data: {
+              orderId: orderId,
+              prodId: prodId
+            },
+            beforeSend: () => {
+              return confirm('this perticular order will be cancelled')
+            },
+            success: (response) => {
+              
+              window.location.reload()
+            }
+          })
+        }
+</script>

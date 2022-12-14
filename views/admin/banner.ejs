@@ -1,0 +1,100 @@
+<div class="col-lg-10 grid-margin stretch-card" >
+  <div class="card">
+    <div class="card-body">
+      <h4 class="card-title">Main Banners Table</h4>
+
+
+      
+      <a type="button " href="/admin/add-main-banner" class="btn btn-success btn-sm btn-icon-text btn-icon-prepend">
+        Add Main Banner
+    </a>
+      <div class="table-responsive">
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">Image</th>
+              <th scope="col">Title</th>
+              <th scope="col">Sub Title</th>
+              <th scope="col">Description</th>
+              <th scope="col">Offer</th>
+              <th scope="col">Action</th>
+           
+            
+            </tr>
+          </thead>
+          <tbody>
+            <% banners.forEach((banner,index)=>{ %> 
+            <tr>
+              <td>
+                <%- index+1 %> 
+              </td>
+              <td class="py-1" >
+                <img style="width: 300px;" src="/assets/banner-images/<%= banner.image%>" alt="image"/>
+              </td>
+              <td>
+               <%- banner.title %> 
+              </td>
+              <td>
+               <%- banner.subtitle %> 
+              </td>
+              <td>
+               <%- banner.description %> 
+              </td>
+              <td>
+               <%- banner.offer %> 
+              </td>
+             
+             
+              <td>
+
+                <!-- <a type="button" style="width:80px ;" href="/admin/blockUser/<%= banner._id  %> "  class="btn btn-success btn-sm btn-icon-text btn-icon-prepend">
+                  edit
+                </a> -->
+                
+                <a type="button" style="width:80px ;" href="/admin/delete-main-banner/<%= banner._id  %> " onclick=" return confirm('are you sure')" class="btn btn-danger btn-sm btn-icon-text  btn-icon-prepend">
+                  delete
+              </a>
+                  
+                
+              </td>
+            </tr>
+          <% }) %> 
+          </tbody>
+        </table>
+      
+        <h4 class="card-title mt-5">Category Banners Table</h4>
+
+        <a type="button " href="/admin/add-main-banner" class="btn btn-success btn-sm btn-icon-text btn-icon-prepend">
+          Add Catagory Banner
+         </a>
+
+         <table class="table">
+          <thead>
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">Image</th>
+              <th scope="col">Title</th>
+              <th scope="col">Sub Title</th>
+              <th scope="col">Description</th>
+              <th scope="col">Offer</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <th scope="row">1</th>
+              <td>Mark</td>
+              <td>Otto</td>
+              <td>@mdo</td>
+              <td>Otto</td>
+              <td>@mdo</td>
+            </tr>
+          </tbody>
+        </table>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+

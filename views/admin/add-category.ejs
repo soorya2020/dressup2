@@ -1,0 +1,76 @@
+<div class="col-md-6 grid-margin stretch-card">
+    <div class="card">
+        <div class="card-body">
+            <h4 class="card-title">Add New Category
+
+            </h4>
+            <!-- <p class="card-description">
+                Basic form layout
+            </p> -->
+           
+
+
+
+
+            <form class="forms-sample text-center" action="" method="">
+                <div class="form-group">
+                    <p id="error"></p>
+                    <label for="exampleInputUsername1">Category</label>
+                    <input type="text" class="form-control" id="name" placeholder="Username" name="name">
+                </div>
+               
+                <button type="button" onclick="validation()" class="btn btn-primary mr-2">Submit</button>
+                <a href="/admin/categories" class="btn btn-light">Cancel</a>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+
+    function validation(){
+        const name=document.getElementById('name')
+        const nameValue=name.value?.trim()
+
+        const err=name.parentElement.querySelector('p')
+        err.innerText=""
+        let flag=1
+        if(nameValue==''){
+            err.innerText='please add category'
+            flag=2
+        }
+
+        if(flag==1){
+            submit(nameValue)
+        }
+
+        function submit(nameValue){
+            fetch('/admin/add-category',{
+                method:'POST',
+                headers:{
+                    'Content-Type': 'application/json'
+                },
+                body:JSON.stringify({
+                    name:nameValue
+                })
+            })
+            .then((res)=>res.json())
+            .then((res)=>{
+                if(res.value=='failed'){
+                    let error=document.getElementById('error')
+                    error.innerText='Category already exist'
+                    
+                }else{
+                    window.location.href='/admin/categories'
+                }
+            })
+        }
+    }
+
+
+
+
+
+
+</script>
+

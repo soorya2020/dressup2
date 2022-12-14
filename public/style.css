@@ -1,0 +1,10 @@
+/* toast */
+    .colored-toast.swal2-icon-success {
+  background-color: #a3ef76 !important;
+  font-size: medium !important;
+  
+}
+.colored-toast.swal2-icon-error {
+  background-color: #f27474 !important;
+  font-size: medium !important;
+}

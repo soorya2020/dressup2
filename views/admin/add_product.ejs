@@ -1,0 +1,239 @@
+<div class="col-12 grid-margin stretch-card">
+    <div class="card">
+        <div class="card-body">
+            <h3 class="card-title">Add Products</h3>
+            <p></p>
+
+            <br>
+
+            <form class="forms-sample" id="addProductsForm" method="post" action="/admin/add-products" enctype="multipart/form-data">
+
+                <div class="row">
+                    <div class="form-group col-md-5">
+                        <strong><p class="text-danger"></p></strong>
+                        <label for="exampleInputName1">Name</label>
+                        <input type="text"  class="form-control" id="name" placeholder="name" name="name" required>
+                    </div>
+
+                    
+                    <div class="form-group col-md-5">
+                        <strong><p class="text-danger"></p></strong>
+                        <label for="exampleInputPassword4">Stock</label>
+                        <input type="text" class="form-control" id="stock" placeholder="stock"
+                            name="stock" required>
+                    </div>
+
+
+                    <div class="form-group col-md-5">
+                        <strong><p class="text-danger"></p></strong>
+                        <label for="exampleSelectGender">Category</label>
+                       
+                        <select class="form-control" id="category" name="category">
+                            <% category.forEach((category)=>{  %> 
+                            <option><%= category.name %> </option>
+                            <% }) %> 
+                        </select>
+                      
+                    </div>
+
+                    <div class="form-group col-md-5">
+                        <strong><p class="text-danger"></p></strong>
+                        <label for="exampleInputPassword4">Price</label>
+                        <input type="text" class="form-control" id="price" placeholder="Price"
+                            name="price" required>
+                    </div>
+
+                    
+
+                    <div class="form-group col-md-5">
+                        <strong><p class="text-danger"></p></strong>
+                        <label for="exampleInputPassword4">Offer Percentage</label>
+                        <input type="number" class="form-control" id="offerPercentage" name="offerPercentage" 
+                             onkeyup="calculateOffer()">
+                    </div>
+
+                    <div class="form-group col-md-5">
+                        <strong><p class="text-danger"></p></strong>
+                        <label for="exampleInputPassword4">Offer Price</label>
+                        <input type="number" readonly class="form-control" id="offerPrice" placeholder="stock"
+                           name="offerPrice" required>
+                    </div>
+
+                    <div class="form-group col-md-10">
+                        <strong><p class="text-danger"></p></strong>
+                        <label for="exampleTextarea1">Description</label>
+                        <textarea class="form-control" id="description" rows="5" name="description"></textarea>
+                    </div>
+
+                    <!-- image upload -->
+                    <div class="">
+                        <h5>Preview</h5>
+                        <img class="ml-3" src=''  width="100px" height="100px" alt="img1" id="image1">
+                        <img class="ml-2" src=''  width="100px" height="100px" alt="img2" id="image2">
+                        <img  class="ml-2"src=''  width="100px" height="100px" alt="img3" id="image3">
+                        <img class="ml-2" src=''  width="100px" height="100px" alt="img4" id="image4">
+
+                    </div>
+                    <div class="form-group col-md-10">
+                     
+                        <label for="">Image</label>
+                        <input type="file"  name="image" class="form-control image" onchange="document.getElementById('image1').src=window.URL.createObjectURL(this.files[0])">
+                    </div>
+
+                    <div class="form-group col-md-10">
+                    
+                        <label for="">Image</label>
+                        <input type="file"  name="image" class="form-control image" onchange="document.getElementById('image2').src=window.URL.createObjectURL(this.files[0])">
+                    </div>
+
+                    <div class="form-group col-md-10">
+                        
+                        <label for="">Image</label>
+                        <input type="file" name="image" class="form-control image" onchange="document.getElementById('image3').src=window.URL.createObjectURL(this.files[0])">
+                    </div>
+
+                    <div class="form-group col-md-10">
+                      
+                        <label for="">Image</label>
+                        <input type="file" name="image" class="form-control image" onchange="document.getElementById('image4').src=window.URL.createObjectURL(this.files[0])">
+                    </div>
+
+
+                    <button type="button" onclick="validation()" class="btn btn-primary ml-3 mr-2 col-md-2">Submit</button>
+                    <a href="/admin/products" class="btn btn-light">Cancel</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+    function calculateOffer(){
+        const price=document.getElementById('price').value
+        const offerPrice=document.getElementById('offerPrice')
+        const offerPercentage=document.getElementById('offerPercentage').value
+        offerPrice.value= Math.floor( price-price*offerPercentage/100)
+        // offerPrice=offerPrice)
+    }
+
+    function validation(){
+     
+    
+        const name=document.getElementById('name')
+        const price=document.getElementById('price')
+        const category=document.getElementById('category')
+        const stock=document.getElementById('stock')
+        const description=document.getElementById('description')
+        const image=document.getElementsByClassName('image')
+
+    
+        const nameValue=name.value?.trim()
+        const priceValue=price.value?.trim()
+        const categoryValue=category.value?.trim()
+        const stockValue=stock.value?.trim()
+        const descriptionValue=description.value?.trim()
+        // const imageValue=image.value?.trim()
+        // console.log(imageValue,'fsdgh');
+
+    
+        const err1=name.parentElement.querySelector('p')
+        err1.innerText=''
+        const err2=price.parentElement.querySelector('p')
+        err2.innerText=''
+        const err3=category.parentElement.querySelector('p')    
+        err3.innerText=''
+        const err4=stock.parentElement.querySelector('p')
+        err4.innerText=''
+        const err5=description.parentElement.querySelector('p')
+        err5.innerText=''
+        // const err6=image.parentElement.querySelector('p')
+        // err6.innerText=''
+    
+        let flag=1
+    
+        //name validation
+        if(nameValue==''){
+            err1.innerText='This field is required'
+            flag=2
+        }else if(!nameValue.match(/[a-zA-Z]/)){
+            err1.innerText='Enter a valid name'
+            flag=2
+        }else if(nameValue.length<3){
+            err1.innerText='name should be atleast 3 characters'
+            flag=2
+        }
+    
+      
+        if (priceValue=='') {
+            err2.innerText='This field is required'
+            flag=2
+        }else if(isNaN(priceValue)){
+            err2.innerText='Price field should be a number'
+            flag=2
+        }
+    
+      
+        if(categoryValue==''){
+            err3.innerText='This field is required'
+            flag=2
+        }  
+    
+        //mobile validation
+        if(stockValue==''){
+            err4.innerText='This field is required'
+            flag=2
+        }else if(isNaN(stockValue)){
+            err4.innerText='stock field should be a number'
+            flag=2
+        }
+
+        if(descriptionValue==''){
+            err5.innerText='This field is required'
+            flag=2
+        }
+
+        //image validation
+        // if(imageValue==""){
+        //     err6.innerText='uplad an image'
+        // }
+    
+        if(flag==1){
+            console.log('validation succecfull');
+            // submit(nameValue,priceValue,categoryValue,quantityValue,descriptionValue)
+            document.getElementById('addProductsForm').submit()
+        }
+    
+        // function submit(nameValue,priceValue,categoryValue,quantityValue,descriptionValue) {
+            
+        //     fetch('/add-products',{
+        //         method:'POST',
+        //         headers:{
+        //             'Content-Type':'application/json'
+        //         },
+        //         body:JSON.stringify({
+        //             name:nameValue,
+        //             price:priceValue,
+        //             category:categoryValue,
+        //             quantity:quantityValue,
+        //             description:descriptionValue,
+                   
+        //         })
+        //     })
+        //     .then((res)=>res.json())
+        //     .then((res)=>{
+    
+        //         console.log("res");
+    
+        //         if(res.value=='success'){
+        //             window.location.href='/admin/products'
+        //         }else{
+        //             window.location.reload()
+        //         }
+        //     })
+        // }
+    
+    }
+    
+    
+    
+    </script>

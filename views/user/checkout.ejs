@@ -1,0 +1,1300 @@
+<style>
+  /*the complete project is in the following link:
+https://github.com/vkive/coupon-code.git
+Follow me on Codepen
+*/
+
+  .mycoupon {
+    width: 100%;
+    height: 32vh;
+    background: #f0fff3;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+  }
+
+  .coupon-card {
+    background: linear-gradient(135deg, #538FFB, #5B54FA);
+    color: #fff;
+    text-align: center;
+    padding: 22px 37px;
+    border-radius: 15px;
+    box-shadow: 0 10px 10px 0 rgba(0, 0, 0, 0.15);
+    position: relative;
+
+  }
+
+  .logo {
+    width: 80px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+
+  }
+
+  .coupon-card h3 {
+    font-size: 20px;
+    font-weight: 400;
+    line-height: 25px;
+
+  }
+
+  .coupon-card p {
+    font-size: 15px;
+
+  }
+
+  .coupon-row {
+    display: flex;
+    align-items: center;
+    margin: 25px auto;
+    width: fit-content;
+
+  }
+
+  #cpnCode {
+    border: 1px dashed #fff !important;
+    padding: 10px 20px !important;
+    border-right: 0 !important;
+
+  }
+
+  .couponButton {
+    border: 1px solid #fff;
+    background: #fff;
+    padding: 13px 20px;
+    color: #7158fe;
+    cursor: pointer;
+  }
+
+  .circle1,
+  .circle2 {
+    background: #f0fff3;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+
+  }
+
+  .circle1 {
+    left: -25px;
+  }
+
+  .circle2 {
+    right: -25px;
+  }
+
+/*  */
+
+/* :root {
+	--stripe1: #E7EFF8;
+	--stripe2: #DAE8F3;
+
+	--blue: #7996B3;
+	--green: #759F87;
+	--pink: #D18794;
+	--purple: #9586AC;
+	--yellow: #EFC16D;
+	} */
+
+/* * {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+	} */
+
+/* body {
+	background: repeating-linear-gradient(
+		45deg,
+		var(--stripe1),
+		var(--stripe1) 30px,
+		var(--stripe2) 30px,
+		var(--stripe2) 60px
+		);
+	} */
+
+/* .container {
+	min-height: 100vh;
+	overflow: hidden;
+	padding: 60px;
+	position: relative;
+	width: 100%;
+	} */
+
+.confetti {
+	position: absolute;
+	display: flex;
+	width: 10px;
+	height: 25px;
+	top: -100px;
+
+	}
+
+.confetti:nth-child(1) {
+	background-color: var(--blue);
+	animation: fall 2.5s linear infinite;
+	left: 10%;
+	}
+
+.confetti:nth-child(2) {
+	background-color: var(--green);
+	animation: fall 2.3s linear infinite .2s;
+	left: 20%;
+	}
+
+.confetti:nth-child(3) {
+	background-color: var(--pink);
+	animation: fall 2.4s linear infinite .4s;
+	left: 30%;
+	}
+
+.confetti:nth-child(4) {
+	background-color: var(--purple);
+	animation: fall 2.7s linear infinite .1s;
+	left: 40%;
+	}
+
+.confetti:nth-child(5) {
+	background-color: var(--yellow);
+	animation: fall 2.6s linear infinite .7s;
+	left: 50%;
+	}
+
+.confetti:nth-child(6) {
+	background-color: var(--blue);
+	animation: fall 2.4s linear infinite .2s;
+	left: 60%;
+	}
+
+.confetti:nth-child(7) {
+	background-color: var(--green);
+	animation: fall 2.1s linear infinite .7s;
+	left: 70%;
+	}
+
+.confetti:nth-child(8) {
+	background-color: var(--pink);
+	animation: fall 2.4s linear infinite .9s;
+	left: 80%;
+	}
+
+.confetti:nth-child(9) {
+	background-color: var(--purple);
+	animation: fall 2.9s linear infinite .9s;
+	left: 90%;
+	}
+
+.confetti:nth-child(10) {
+	background-color: var(--yellow);
+	animation: fall 2.2s linear infinite 1.1s;
+	left: 100%;
+	}
+
+.confetti:nth-child(11) {
+	background-color: var(--blue);
+	animation: fall2 2.5s linear infinite;
+	left: 95%;
+	}
+
+.confetti:nth-child(12) {
+	background-color: var(--green);
+	animation: fall2 2.3s linear infinite 1.1s;
+	left: 85%;
+	}
+
+.confetti:nth-child(13) {
+	background-color: var(--pink);
+	animation: fall2 2.4s linear infinite 1.2s;
+	left: 75%;
+	}
+
+.confetti:nth-child(14) {
+	background-color: var(--purple);
+	animation: fall2 2.7s linear infinite 1.3s;
+	left: 65%;
+	}
+
+.confetti:nth-child(15) {
+	background-color: var(--yellow);
+	animation: fall2 2.6s linear infinite 1.4s;
+	left: 55%;
+	}
+
+.confetti:nth-child(16) {
+	background-color: var(--blue);
+	animation: fall2 2.4s linear infinite 1.5s;
+	left: 45%;
+	}
+
+.confetti:nth-child(17) {
+	background-color: var(--green);
+	animation: fall2 2.1s linear infinite 1.6s;
+	left: 35%;
+	}
+
+.confetti:nth-child(18) {
+	background-color: var(--pink);
+	animation: fall2 2.4s linear infinite 1.7s;
+	left: 25%;
+	}
+
+.confetti:nth-child(19) {
+	background-color: var(--purple);
+	animation: fall2 2.9s linear infinite 1.8s;
+	left: 15%;
+	}
+
+.confetti:nth-child(20) {
+	background-color: var(--yellow);
+	animation: fall2 2.2s linear infinite 1.9s;
+	left: 5%;
+	}
+
+.confetti:nth-child(21) {
+	background-color: var(--blue);
+	animation: fall 2.5s linear infinite;
+	left: 3%;
+	}
+
+.confetti:nth-child(22) {
+	background-color: var(--green);
+	animation: fall 2.3s linear infinite 1.3s;
+	left: 13%;
+	}
+
+.confetti:nth-child(23) {
+	background-color: var(--pink);
+	animation: fall 2.4s linear infinite 1.4s;
+	left: 23%;
+	}
+
+.confetti:nth-child(24) {
+	background-color: var(--purple);
+	animation: fall 2.7s linear infinite 1.5s;
+	left: 33%;
+	}
+
+.confetti:nth-child(25) {
+	background-color: var(--yellow);
+	animation: fall 2.6s linear infinite 1.6s;
+	left: 43%;
+	}
+
+.confetti:nth-child(26) {
+	background-color: var(--blue);
+	animation: fall 2.4s linear infinite 1.2s;
+	left: 53%;
+	}
+
+.confetti:nth-child(27) {
+	background-color: var(--green);
+	animation: fall 2.1s linear infinite 1.7s;
+	left: 63%;
+	}
+
+.confetti:nth-child(28) {
+	background-color: var(--pink);
+	animation: fall 2.4s linear infinite 1.8s;
+	left: 73%;
+	}
+
+.confetti:nth-child(29) {
+	background-color: var(--purple);
+	animation: fall 2.9s linear infinite 1.9s;
+	left: 83%;
+	}
+
+.confetti:nth-child(30) {
+	background-color: var(--yellow);
+	animation: fall 2.2s linear infinite 1.1s;
+	left: 93%;
+	}
+
+.confetti:nth-child(31) {
+	background-color: var(--blue);
+	animation: fall2 2.2s linear infinite 1.1s;
+	left: 7%;
+	}
+
+.confetti:nth-child(32) {
+	background-color: var(--green);
+	animation: fall2 2.9s linear infinite .9s;
+	left: 17%;
+	}
+
+.confetti:nth-child(33) {
+	background-color: var(--pink);
+	animation: fall2 2.4s linear infinite .1s;
+	left: 27%;
+	}
+
+.confetti:nth-child(34) {
+	background-color: var(--purple);
+	animation: fall2 2.1s linear infinite .7s;
+	left: 37%;
+	}
+
+.confetti:nth-child(35) {
+	background-color: var(--yellow);
+	animation: fall2 2.4s linear infinite .2s;
+	left: 47%;
+	}
+
+.confetti:nth-child(36) {
+	background-color: var(--blue);
+	animation: fall2 2.6s linear infinite .7s;
+	left: 57%;
+	}
+
+.confetti:nth-child(37) {
+	background-color: var(--green);
+	animation: fall2 2.7s linear infinite .9s;
+	left: 67%;
+	}
+
+.confetti:nth-child(38) {
+	background-color: var(--pink);
+	animation: fall2 2.4s linear infinite .4s;
+	left: 77%;
+	}
+
+.confetti:nth-child(39) {
+	background-color: var(--purple);
+	animation: fall2 2.3s linear infinite .2s;
+	left: 87%;
+	}
+
+.confetti:nth-child(40) {
+	background-color: var(--yellow);
+	animation: fall2 2.5s linear infinite .3s;
+	left: 97%;
+	}
+
+@keyframes fall {
+	0% {top:-110px; transform: rotate(0deg) rotateY(-90deg); opacity:1;}
+	100% {top:900px; transform: rotate(360deg) rotateY(180deg); opacity:0.7;}
+}
+
+@keyframes fall2 {
+	0% {top:-110px; transform: rotate(0deg) rotateY(90deg); opacity:1;}
+	100% {top:900px; transform: rotate(-360deg) rotateY(-180deg); opacity:0.5;}
+}
+
+
+
+
+
+
+
+
+</style>
+<% 
+dataToReadable=(date)=>{
+
+const date_=new Date(date);
+let month=['Jan', 'Feb', 'Mar', 'Apr', 'May', 'June', 'July', 'Aug', 'Sept', 'Oct', 'Nov', 'Dec'];
+let dd=date_.getDate()
+let mm=date_.getMonth()
+let monthText=month[mm]
+let yyyy=date_.getFullYear()
+
+return `${isNaN(dd)?'00':dd}-${monthText}-${isNaN(yyyy)?'0000':yyyy}`
+
+} %>
+
+
+
+<!-- fall -->
+<div  hidden id="fallingeffect" class="container">
+
+  <div class="confetti"></div>
+  <div class="confetti"></div>
+  <div class="confetti"></div>
+  <div class="confetti"></div>
+  <div class="confetti"></div>
+  <div class="confetti"></div>
+  <div class="confetti"></div>
+  <div class="confetti"></div>
+  <div class="confetti"></div>
+  <div class="confetti"></div>
+  
+  <div class="confetti"></div>
+  <div class="confetti"></div>
+  <div class="confetti"></div>
+  <div class="confetti"></div>
+  <div class="confetti"></div>
+  <div class="confetti"></div>
+  <div class="confetti"></div>
+  <div class="confetti"></div>
+  <div class="confetti"></div>
+  <div class="confetti"></div>
+  
+  <div class="confetti"></div>
+  <div class="confetti"></div>
+  <div class="confetti"></div>
+  <div class="confetti"></div>
+  <div class="confetti"></div>
+  <div class="confetti"></div>
+  <div class="confetti"></div>
+  <div class="confetti"></div>
+  <div class="confetti"></div>
+  <div class="confetti"></div>
+  
+  <div class="confetti"></div>
+  <div class="confetti"></div>
+  <div class="confetti"></div>
+  <div class="confetti"></div>
+  <div class="confetti"></div>
+  <div class="confetti"></div>
+  <div class="confetti"></div>
+  <div class="confetti"></div>
+  <div class="confetti"></div>
+  <div class="confetti"></div>
+  
+  </div>
+<!--fall   -->
+
+
+
+
+<main class="main">
+  <div class="page-header text-center" style="background-image: url('https://image.shutterstock.com/image-photo/credit-cards-on-hand-customers-260nw-1416251864.jpg')">
+    <div class="container">
+      <h1 class="page-title">Checkout<span>Shop</span></h1>
+    </div><!-- End .container -->
+  </div><!-- End .page-header -->
+  <nav aria-label="breadcrumb" class="breadcrumb-nav">
+
+  </nav><!-- End .breadcrumb-nav -->
+
+  <div class="page-content">
+    <div class="checkout">
+      <div class="container">
+
+        <!-- end of address -->
+
+        <div style="background-color:rgb(255, 250, 250) ;" class="accordion-summary " id="accordion-payment">
+          <hr style="color: black;">
+          <h5 class="ml-4">my address</h4>
+            <% address[0]?.address?.forEach((address,index)=>{%>
+            <div class="card my-4 ml-4">
+              <div class="card-header" id="heading-3">
+                <h2 class="card-title">
+                  <input onclick="fillAddress('<%=address._id %>');toast('address auto filled')" type="radio" name="address" class="collapsed" role="button" data-toggle="collapse" href="#collapse-<%= index+1 %>" id="address<%=index+1%>" aria-expanded="false" aria-controls="collapse-<%= index+1 %>">
+                  <label for="address<%=index+1%>"><%= address.firstName%> <%= address.lastName %> </label>
+                  </input>
+                </h2>
+              </div><!-- End .card-header -->
+              <div id="collapse-<%= index+1 %>" class="collapse" aria-labelledby="heading-<%= index+1 %>" data-parent="#accordion-payment">
+                <div class="card-body">
+                  <strong>address :</strong> <%= address.street+" "+address.town+" "+address.state+" "+address.pincode%> <br>
+                  <strong>mobile :</strong> <%= address.mobile%> <br>
+                  <strong>email :</strong> <%= address.email%> <br>
+                  <hr>
+
+
+                </div><!-- End .card-body -->
+              </div><!-- End .collapse -->
+            </div><!-- End .card -->
+
+            <% }) %>
+
+            <button onClick="window.location.reload()" class="btn btn-outline-success btn-sm py-1 ml-4">New address</a> + </button>
+            <hr>
+        </div>
+
+        <!-- end of address -->
+
+        <div class="checkout-discount">
+          <form action="#">
+            <input type="text" value="" class="form-control" required id="checkout-discount-input">
+            <label for="checkout-discount-input" class="text-truncate">Have a coupon? <span>Click here to enter your code</span></label>
+          </form>
+        </div><!-- End .checkout-discount -->
+
+
+
+        <div>
+          <button type="button" class="btn btn-success rounded" data-toggle="modal" data-target="#exampleModalLong">Browse coupon</button>
+        </div>
+
+
+        <!-- Modal -->
+        <div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                <div class="container-fluid">
+                  <!-- coupon start -->
+                  <% coupons.forEach(element=>{ %>
+                  <div class="container mycoupon">
+                    <div class="coupon-card">
+                      <!-- <img src="https://i.postimg.cc/KvTqpZq9/uber.png" class="logo"> -->
+                      <h3><%=  element.description %> </h3>
+                      <div class="coupon-row">
+                        <span id="cpnCode" class="couponName"><%= element.couponName  %> </span>
+                        <button onclick="applyCoupon(this,'<%= element._id%>','<%= element.couponName  %>')" id="<%= element._id  %> " class="btn couponButton">Apply Coupon  </button>
+                      </div>
+                      <p style="color:white ;">Valid Till: <%= dataToReadable(element.expiry) %> </p>
+                      <input hidden id="couponId" type="text" value="<%= element._id %>">
+                      <div class="circle1"></div>
+                      <div class="circle2"></div>
+                    </div>
+                  </div>
+                  <% }) %>
+                  <!-- coupon end -->
+                </div>
+              </div>
+              <div class="modal-footer">
+                <button type="button" onClick="window.location.reload()" class="btn btn-secondary text-white" data-dismiss="modal">cancel</button>
+                <a type="button" class="btn btn-primary  text-white" data-dismiss="modal">Save</a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!--  -->
+
+
+
+
+        <form action="#">
+          <div class="row">
+            <div class="col-lg-9">
+              <h2 class="checkout-title">Billing Details</h2><!-- End .checkout-title -->
+              <div class="row">
+                <div class="col-sm-6">
+                  <div class="d-flex justify-content-between">
+
+                    <label>First Name *</label>
+                    <p class="text-danger "></p>
+                  </div>
+                  <input type="text" name="firstname" id="firstname" class="form-control" required>
+                </div><!-- End .col-sm-6 -->
+
+                <div class="col-sm-6">
+                  <div class="d-flex justify-content-between">
+                    <label>Last Name *</label>
+                    <p class="text-danger"></p>
+                  </div>
+                  <input type="text" name="lastname" id="lastname" class="form-control" required>
+                </div><!-- End .col-sm-6 -->
+              </div><!-- End .row -->
+
+
+              <div>
+                <div class="d-flex justify-content-between">
+                  <label>Country *</label>
+                  <p class="text-danger"></p>
+                </div>
+                <input type="text" name="country" id="country" value="india" class="form-control" required>
+              </div>
+
+              <div>
+                <div class="d-flex justify-content-between">
+                  <label>Street address *</label>
+                  <p class="text-danger"></p>
+                </div>
+                <input type="text" name="address1" id="add" class="form-control" required>
+                <input type="text" name="address2" id="address2" class="form-control" placeholder="Appartments, suite, unit etc ..." required>
+              </div>
+
+              <div class="row">
+                <div class="col-sm-6">
+                  <div class="d-flex justify-content-between">
+                    <label>Town / City *</label>
+                    <p class="text-danger"></p>
+                  </div>
+                  <input type="text" name="town" id="town" class="form-control" required>
+                </div><!-- End .col-sm-6 -->
+
+                <div class="col-sm-6">
+                  <div class="d-flex justify-content-between">
+                    <label>State / County *</label>
+                    <p class="text-danger"></p>
+                  </div>
+                  <input type="text" name="state" id="state" class="form-control" required>
+                </div><!-- End .col-sm-6 -->
+              </div><!-- End .row -->
+
+              <div class="row">
+                <div class="col-sm-6">
+                  <div class="d-flex justify-content-between">
+                    <label>Postcode / ZIP *</label>
+                    <p class="text-danger"></p>
+                  </div>
+                  <input type="text" name="pincode" id="pincode" class="form-control" required>
+                </div><!-- End .col-sm-6 -->
+
+                <div class="col-sm-6">
+                  <div class="d-flex justify-content-between">
+                    <label>Phone *</label>
+                    <p class="text-danger"></p>
+                  </div>
+                  <input type="tel" name="mobile" id="mobile" class="form-control" required>
+                </div><!-- End .col-sm-6 -->
+              </div><!-- End .row -->
+              <div>
+                <div class="d-flex justify-content-between">
+                  <label>Email address *</label>
+                  <p class="text-danger"></p>
+                </div>
+                <input type="email" name="email" id="email" class="form-control" required>
+
+              </div>
+
+
+              <div class="custom-control custom-checkbox">
+                <input type="checkbox" class="custom-control-input" id="checkout-create-acc">
+                <label class="custom-control-label" for="checkout-create-acc">Create an account?</label>
+              </div><!-- End .custom-checkbox -->
+
+              <div class="custom-control custom-checkbox">
+                <input type="checkbox" class="custom-control-input" id="checkout-diff-address">
+                <label class="custom-control-label" for="checkout-diff-address">Ship to a different
+                  address?</label>
+              </div><!-- End .custom-checkbox -->
+
+              <label>Order notes (optional)</label>
+              <textarea class="form-control" cols="30" rows="4" placeholder="Notes about your order, e.g. special notes for delivery"></textarea>
+            </div><!-- End .col-lg-9 -->
+            <aside class="col-lg-3">
+              <div class="summary">
+                <h3 class="summary-title">Your Order</h3><!-- End .summary-title -->
+
+                <table class="table table-summary">
+                  <thead>
+                    <tr>
+                      <th>Product</th>
+                      <th></th>
+
+                      <th>Price</th>
+
+                    </tr>
+                  </thead>
+
+                  <tbody>
+                    <% cartProducts.forEach(product=>{ %>
+                    <tr>
+
+                      <td><img style="width:50px ;" src="product-images/<%=product?.product?.img[0]  %> " alt="image" srcset=""></td>
+
+                      
+                      <td>X <%= product?.quantity %> </td>
+                      <td>₹ <%= product?.product?.offerPrice*product.quantity %> </td>
+
+                    </tr>
+                    <% }) %>
+
+
+                    <tr class="summary-subtotal">
+
+                      <td>Subtotal:</td>
+                      <td></td>
+                      <td>₹ <%= total %> </td>
+                    </tr><!-- End .summary-subtotal -->
+                    <tr>
+                      <td>Shipping:</td>
+                      <td>Free shipping</td>
+                    </tr>
+                    <tr>
+                      <td>
+                        Offer:
+                      </td>
+                      <td>
+                        <strong><p class="text-success" id="offerApplied">₹ 0</p></strong>
+                      </td>
+                    </tr>
+                    <tr class="summary-total">
+                      <td>Total:</td>
+                      <td id="finalAmount">₹ <%= total? total:0 %>
+                      </td>
+                    </tr><!-- End .summary-total -->
+                  </tbody>
+                </table><!-- End .table table-summary -->
+
+                <div class="accordion-summary" id="accordion-payment">
+
+
+
+
+                  <div class="card">
+                    <div class="card-header" id="heading-3">
+                      <h2 class="card-title">
+                        <input type="radio" class="collapsed" name="payment" role="button" data-toggle="collapse" href="#collapse-3" id="COD" value="COD" aria-expanded="false" aria-controls="collapse-3">
+                        <label for="cash on delivery">Cash on delivery</label>
+                        </input>
+                      </h2>
+                    </div><!-- End .card-header -->
+                    <div id="collapse-3" class="collapse" aria-labelledby="heading-3" data-parent="#accordion-payment">
+                      <div class="card-body">Quisque volutpat mattis eros. Lorem ipsum dolor sit
+                        amet, consectetuer adipiscing elit. Donec odio. Quisque volutpat mattis
+                        eros.
+                      </div><!-- End .card-body -->
+                    </div><!-- End .collapse -->
+                  </div><!-- End .card -->
+
+                  <div class="card">
+                    <div class="card-header" id="heading-4">
+                      <h2 class="card-title">
+                        <input type="radio" value="PAYPAL" id="paymentMode" name="payment" class="collapsed" role="button" data-toggle="collapse" href="#collapse-4" aria-expanded="false" aria-controls="collapse-4">
+                        PayPal
+                        </input>
+
+                      </h2>
+                    </div><!-- End .card-header -->
+                    <div id="collapse-4" class="collapse" aria-labelledby="heading-4" data-parent="#accordion-payment">
+                      <br>
+
+
+                    </div><!-- End .collapse -->
+                  </div><!-- End .card -->
+
+                  <div class="card">
+                    <div class="card-header" id="heading-5">
+                      <h2 class="card-title">
+                        <input type="radio" id="paymentMode" value="UPI" name="payment" class="collapsed" role="button" data-toggle="collapse" href="#collapse-5" aria-expanded="false" aria-controls="collapse-5">
+                        razorpay
+
+                        </input>
+                      </h2>
+                    </div><!-- End .card-header -->
+                    <div id="collapse-5" class="collapse" aria-labelledby="heading-5" data-parent="#accordion-payment">
+                      <div class="card-body"> Donec nec justo eget felis facilisis fermentum.Lorem
+                        ipsum dolor sit amet, consectetuer adipiscing elit. Donec odio. Quisque
+                        volutpat mattis eros. Lorem ipsum dolor sit ame.
+                      </div><!-- End .card-body -->
+                    </div><!-- End .collapse -->
+                  </div><!-- End .card -->
+                </div><!-- End .accordion -->
+                <div id="paypal-button-container"></div>
+                <button type="button" class="btn btn-outline-primary-2 btn-order btn-block" onclick="validate()">
+                  <span class="btn-text">Place Order</span>
+
+                  <span class="btn-hover-text">Proceed to Checkout</span>
+
+
+                </button>
+
+              </div><!-- End .summary -->
+            </aside><!-- End .col-lg-3 -->
+          </div><!-- End .row -->
+        </form>
+      </div><!-- End .container -->
+    </div><!-- End .checkout -->
+  </div><!-- End .page-content -->
+</main><!-- End .main -->
+
+<script src="https://www.paypal.com/sdk/js?client-id=<%=paypalClientId  %> "></script>
+
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+<script>
+  function validate(couponId) {
+
+    const firstname = document.getElementById('firstname')
+    const lastname = document.getElementById('lastname')
+    const country = document.getElementById('country')
+    const address1 = document.getElementById('add')
+    const city = document.getElementById('town')
+    const state = document.getElementById('state')
+    const pincode = document.getElementById('pincode')
+    const mobile = document.getElementById('mobile')
+    const email = document.getElementById('email')
+
+
+    const paymentMethod = document.querySelector('input[name="payment"]:checked')?.value ? document.querySelector('input[name="payment"]:checked').value : ""
+
+
+    const firstnameValue = firstname.value?.trim()
+    const lastnameValue = lastname.value?.trim()
+    const countryValue = country.value?.trim()
+    const address1Value = address1.value?.trim()
+
+    const cityValue = city.value?.trim()
+    const stateValue = state.value?.trim()
+    const pincodeValue = pincode.value?.trim()
+    const mobilevValue = mobile.value?.trim()
+    const emailValue = email.value?.trim()
+
+
+
+
+    // const paymentValue=document.getElementById()
+
+    const err1 = firstname.parentElement.querySelector('p')
+    err1.innerText = ""
+    const err2 = lastname.parentElement.querySelector('p')
+    err2.innerText = ""
+
+    const err4 = country.parentElement.querySelector('p')
+    err4.innerText = ""
+    const err5 = address1.parentElement.querySelector('p')
+    err5.innerText = ""
+
+    const err7 = city.parentElement.querySelector('p')
+    err7.innerText = ""
+    const err8 = state.parentElement.querySelector('p')
+    err8.innerText = ""
+    const err9 = pincode.parentElement.querySelector('p')
+    err9.innerText = ""
+    const err10 = mobile.parentElement.querySelector('p')
+    err10.innerText = ""
+    const err11 = email.parentElement.querySelector('p')
+    err11.innerText = ""
+
+    let flag = 1
+    //firstname
+    if (firstnameValue == '') {
+      err1.innerText = 'This field is required'
+      flag = 2
+    } else if (!firstnameValue.match(/[a-zA-Z]/)) {
+      err1.innerText = 'Enter a valid name'
+      flag = 2
+    } else if (firstnameValue.length < 3) {
+      err1.innerText = 'name should be atleast 3 characters'
+      flag = 2
+    }
+
+    //lastname
+    if (lastnameValue == '') {
+      err2.innerText = "This field is required"
+      flag = 2
+    }
+
+
+
+    //country
+    if (countryValue == '') {
+      err4.innerText = "This field is required"
+      flag = 2
+    }
+
+    //adress1
+    if (address1Value == "") {
+      err5.innerText = "This field is required"
+      flag = 2
+    } else if (!address1Value.match(/^[a-zA-Z0-9\s,.'-]{3,}$/)) {
+      err5.innerText = "not valid address"
+      flag = 2
+    }
+
+    //adress2
+    // if (address2Value == "") {
+    //     err6.innerText = "This field is required"
+    //     flag = 2
+    // }
+
+    //city
+    if (cityValue == '') {
+      err7.innerText = "This field is required"
+      flag = 2
+    }
+
+    //state
+    if (stateValue == '') {
+      err8.innerText = "This field is required"
+      flag = 2
+    }
+
+    //pincode
+    if (pincodeValue == '') {
+      err9.innerText = "This field is required"
+      flag = 2
+    } else if (!pincodeValue.match(/^[1-9][0-9]{5}$/)) {
+      err9.innerText = 'enter a valid pincode'
+      flag = 2
+    }
+
+    //mobile
+    if (mobilevValue == '') {
+      err10.innerText = "This field is required"
+      flag = 2
+    } else if (!mobilevValue.match(/^[7-9][0-9]{9}$/)) {
+      err10.innerText = "Enter a valid phone number"
+      flag = 2
+    }
+
+    //email
+    if (emailValue == '') {
+      err11.innerText = "This field is required"
+      flag = 2
+    } else if (!emailValue.match(/^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/)) {
+      err2.innerText = 'Please enter a valid email'
+      flag = 2
+    }
+
+    //payment method
+    if (paymentMethod == "") {
+      alert('PLESE ENTER A PAYMENT METHOD')
+
+
+      flag = 3
+    }
+
+
+
+    if (flag == 1) {
+
+
+      submit(
+        firstnameValue,
+        lastnameValue,
+
+        countryValue,
+        address1Value,
+        // address2Value,
+        cityValue,
+        stateValue,
+        pincodeValue,
+        mobilevValue,
+        emailValue,
+        paymentMethod //send this also
+      )
+    }
+
+    function submit(
+      firstnameValue,
+      lastnameValue,
+      countryValue,
+      streetValue,
+      cityValue,
+      stateValue,
+      pincodeValue,
+      mobilevValue,
+      emailValue,
+      paymentMethod
+    ) {
+
+      $.ajax({
+        url: '/checkout',
+        method: 'post',
+        data: {
+          firstname: firstnameValue,
+          lastname: lastnameValue,
+          country: countryValue,
+          street: streetValue,
+          town: cityValue,
+          state: stateValue,
+          pincode: pincodeValue,
+          mobile: mobilevValue,
+          email: emailValue,
+          paymentMethod: paymentMethod
+          
+        },
+        error:(error)=>{
+     
+          Swal.fire({
+              icon: 'error',
+              title: error.responseJSON.message,
+              text: 'Something went wrong!',
+              footer: '<a href="">have agood day</a>'
+            })
+        },
+
+
+        success: (response) => {
+          if (response.outOfStock) {
+            alert('item was out of stock')
+          } else if (response.status == true) { //no products to order
+            Swal.fire({
+              icon: 'error',
+              title: 'Oops... Add Products plzzzzz',
+              text: 'Something went wrong!',
+              footer: '<a href="">have agood day</a>'
+            })
+            setTimeout(() => {
+              location.reload()
+            }, 3000);
+          } else if (response?.cod == true) { //cod
+            window.location.href = '/ordersuccess'
+
+          } else if (response.paypal) {
+            paypalPayment(response.totalPrice)
+          } else if (response) {
+            rozorpayPayment(response)
+          }
+
+
+
+        }
+      })
+
+
+      function rozorpayPayment(order) {
+
+        var options = {
+          "key": "rzp_test_tUZpCht97wF71G",
+          "amount": order.amount,
+          "currency": "INR",
+          "name": "soorya krishnanunni",
+          "description": "Test Transaction",
+          "image": "https://www.google.com/imgres?imgurl=https%3A%2F%2Fcdn.pixabay.com%2Fphoto%2F2016%2F12%2F26%2F18%2F33%2Flogo-1932539__340.png&imgrefurl=https%3A%2F%2Fpixabay.com%2Fimages%2Fsearch%2Flogo%2F&tbnid=2oNLvrjEyTXhzM&vet=12ahUKEwj3k8fz-rT7AhVMwXMBHTcRBpEQMygHegUIARDyAQ..i&docid=bVXxrJ-DMFgyIM&w=453&h=340&q=logo%20images&ved=2ahUKEwj3k8fz-rT7AhVMwXMBHTcRBpEQMygHegUIARDyAQ",
+          "order_id": order.id,
+          "handler": function(response) {
+
+            // alert(response.razorpay_payment_id);
+            // alert(response.razorpay_order_id);
+            // alert(response.razorpay_signature)
+            verifyPayment(response, order)
+          },
+          "prefill": {
+            "name": "soorya krishnanunni",
+            "email": "sooryakrishnanunni@gmail.com",
+            "contact": "7561071554"
+          },
+          "notes": {
+            "address": "Razorpay Corporate Office"
+          },
+          "theme": {
+            "color": "#ef4325"
+          }
+        };
+        var rzp1 = new Razorpay(options);
+        rzp1.on('payment.failed', function(response) {
+          alert("payment failed")
+          alert(response.error.code);
+          alert(response.error.description);
+          alert(response.error.source);
+          alert(response.error.step);
+          alert(response.error.reason);
+          alert(response.error.metadata.order_id);
+          alert(response.error.metadata.payment_id);
+          location.reload()
+        });
+        rzp1.open();
+        // document.getElementById('rzp-button1').onclick = function(e){
+        //     rzp1.open();
+        //     e.preventDefault();
+        // }
+      }
+
+      function verifyPayment(payment, order) {
+        console.log(payment,order,'this is my orer and payment in verifypayment');
+        $.ajax({
+          url: '/verify-payment',
+          method: "post",
+          data: {
+            payment,
+            order
+          },
+          success: (response) => {
+            if (response.status == true) {
+              let timerInterval
+              Swal.fire({
+                title: 'payment successfull',
+                html: 'you will be redirected in <b></b> milliseconds.',
+                timer: 3000,
+                timerProgressBar: true,
+                didOpen: () => {
+                  Swal.showLoading()
+                  const b = Swal.getHtmlContainer().querySelector('b')
+                  timerInterval = setInterval(() => {
+                    b.textContent = Swal.getTimerLeft()
+                  }, 100)
+                },
+                willClose: () => {
+                  clearInterval(timerInterval)
+                }
+              }).then((result) => {
+                /* Read more about handling dismissals below */
+                if (result.dismiss === Swal.DismissReason.timer) {
+                  console.log('do not press back')
+                }
+              })
+              setTimeout(() => {
+                window.location.href = '/ordersuccess'
+              }, 3500);
+            } else {
+
+              alert(response.status)
+              window.location.href = '/orders'
+            }
+          }
+        })
+      }
+
+
+
+      function paypalPayment(total) {
+
+        paypal.Buttons({
+          // Sets up the transaction when a payment button is clicked
+          createOrder: () => {
+            return fetch('/create-order', {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json'
+              },
+              body: JSON.stringify({
+                total: total,
+
+              })
+
+            }).then((response) => {
+              if (response.ok) return response.json()
+              return response.json().then(json => Promise.reject(json))
+            }).then(({
+              id
+            }) => {
+              return id
+            }).catch(e => {
+              console.error(e.error);
+            })
+
+          },
+          // Finalize the transaction after payer approval
+          onApprove: (data, actions) => {
+            $.ajax({
+              url: '/verify-paypal',
+              method: 'get',
+              success: (response) => {
+                if (response.status) {
+                  let timerInterval
+                  Swal.fire({
+                    title: 'Payment Successfull',
+                    html: 'I will close in <b></b> milliseconds.',
+                    timer: 2000,
+                    timerProgressBar: true,
+                    didOpen: () => {
+                      Swal.showLoading()
+                      const b = Swal.getHtmlContainer().querySelector('b')
+                      timerInterval = setInterval(() => {
+                        b.textContent = Swal.getTimerLeft()
+                      }, 100)
+                    },
+                    willClose: () => {
+                      clearInterval(timerInterval)
+                    }
+                  }).then((result) => {
+                    /* Read more about handling dismissals below */
+                    if (result.dismiss === Swal.DismissReason.timer) {
+                      console.log('I was closed by the timer')
+                      window.location.href = '/orders'
+                    }
+                  })
+                } else {
+                  alert('payment status not changed')
+                }
+              }
+            })
+          }
+        }).render('#paypal-button-container');
+      }
+    }
+  }
+
+  function fillAddress(address_id) {
+    console.log(address_id);
+
+    $.ajax({
+      url: '/fill-address/' + address_id,
+      method: 'get',
+      success: (response) => {
+        document.getElementById('firstname').value = response.firstName
+        document.getElementById('lastname').value = response.lastName
+        document.getElementById('country').value = response.country
+        document.getElementById('add').value = response.street
+        document.getElementById('state').value = response.state
+        document.getElementById('town').value = response.town
+        document.getElementById('pincode').value = response.pincode
+        document.getElementById('mobile').value = response.mobile
+        document.getElementById('email').value = response.email
+      }
+
+    })
+  }
+
+
+
+
+  function applyCoupon(input, id,couponCode) {
+    var cpnBtn = input
+
+    // var cpnCode = input.parentElement.querySelector('span.couponName')
+    // document.getElementById('checkout-discount-input').innerText==couponCode
+    // var couponId = document.getElementById('couponId').value
+    
+    cpnBtn.innerHTML = "APPLIED";
+   
+    
+
+    $.ajax({
+      url: '/apply-coupon',
+      method: 'post',
+      data: {
+        _id: id
+      },
+      success: (response) => {
+    
+
+        if (response.status) {
+
+          var elems = document.getElementsByClassName("couponButton");
+           for (var i = 0; i < elems.length; i++) {
+             elems[i].disabled = true;
+           }
+
+           document.getElementById('fallingeffect').removeAttribute('hidden')
+           setTimeout(() => {
+            document.getElementById('fallingeffect').setAttribute('hidden','')
+           }, 4000);
+          toast('Coupon applied')
+          cpnBtn.innerHTML = "applied"
+          document.getElementById('offerApplied').innerText = "₹"+response.couponAmount
+          let offerTotal =document.getElementById('finalAmount').innerText=response.offerTotal
+          document.getElementById('finalAmount').innerText = "₹"+offerTotal
+
+        } else {
+          toast2(response.message)
+        }
+      }
+    })
+    // setTimeout(function(){
+    //     cpnBtn.innerHTML="COPY CODE";
+    // }, 3000);
+
+  }
+
+
+  // script for coupon from codepen
+  // var cpnBtn = document.getElementById("cpnBtn");
+  //           var cpnCode = document.getElementById("cpnCode");
+  //           var couponId=document.getElementById('couponId').value
+
+
+  //           cpnBtn.onclick = function(){
+  //               navigator.clipboard.writeText(cpnCode.innerHTML);
+  //               cpnBtn.innerHTML ="COPIED";
+
+  //               $.ajax({
+  //                 url:'/apply-coupon',
+  //                 method:'post',
+  //                 data:{
+  //                   _id:couponId
+  //                 },
+  //                 success:(response)=>{
+  //                   if(response.status){
+  //                     cpnBtn.innerHTML="applied"
+  //                    document.getElementById('offerApplied').innerText=response.couponAmount
+  //                    let discountTotal=parseInt(document.getElementById('finalAmount').innerText.split(' ')[1])-parseInt(response.couponAmount)
+  //                    document.getElementById('finalAmount').innerText='Rs '+discountTotal
+
+  //                   }else{
+  //                     alert('error')
+  //                   }
+  //                 }
+  //               })
+  //               // setTimeout(function(){
+  //               //     cpnBtn.innerHTML="COPY CODE";
+  //               // }, 3000);
+
+  //           }
+</script>

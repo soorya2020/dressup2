@@ -1,0 +1,82 @@
+<div class="col-lg-10 grid-margin stretch-card">
+    <div class="card">
+      <div class="card-body">
+        <h4 class="card-title">Striped Table</h4>
+        <% const dataToReadable=(date)=>{
+
+          const date_=new Date(date);
+          let month=['Jan', 'Feb', 'Mar', 'Apr', 'May', 'June', 'July', 'Aug', 'Sept', 'Oct', 'Nov', 'Dec'];
+          let dd=date_.getDate()
+          let mm=date_.getMonth()
+          let monthText=month[mm]
+          let yyyy=date_.getFullYear()
+        
+          return `${isNaN(dd)?'00':dd}-${monthText}-${isNaN(yyyy)?'0000':yyyy}`
+        
+          } %>
+
+        
+        <a type="button " href="/admin/add-coupon" class="btn btn-success btn-sm btn-icon-text btn-icon-prepend">
+          Add Coupon
+      </a>
+        <div class="table-responsive">
+          <table class="table table-bordered">
+            <thead class="">
+              <tr>
+                <th>
+                  #
+                </th>
+                <th class="">
+                  Coupon Code
+                </th>
+                <th>
+                  Expiry
+                </th>
+                <th>
+                  Order Value
+                </th>
+                <th>
+                  discount %
+                </th>
+                <th>
+                  Capped Discount
+                </th>
+                <th>
+                  description
+                </th>
+            
+              </tr>
+            </thead>
+           <% coupons.forEach((element,index)=>{ %> 
+              <tr>
+                <td>
+                  <%= index+1 %> 
+                </td>
+                <td class="py-1" >
+                  <img  src="/couponimage.jpg" alt="image"/>
+                  <%= element.couponName %> 
+                </td>
+                <td>
+               <%= dataToReadable(element.expiry)  %> 
+                </td>
+                <td>
+                  ₹ <%= element.minPurchase %>
+                </td>
+                <td>
+                 <%= element.discountPercentage%>% OFF
+                </td>
+                <td>
+                 <%= element.maxDiscountValue%>
+                </td>
+                <td>
+                 <%= element.description%>
+                </td>
+              </tr>
+            <% }) %> 
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+

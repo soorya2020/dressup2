@@ -1,0 +1,70 @@
+<div class="col-lg-11 grid-margin stretch-card">
+    <div class="card">
+      <div class="card-body">
+        <h4 class="card-title">Striped Table</h4>
+
+
+        
+        <!-- <a type="button " href="/admin/add-users" class="btn btn-success btn-sm btn-icon-text btn-icon-prepend">
+          Add Users
+      </a> -->
+        <div class="table-responsive">
+          <table class="table table-striped">
+            <thead>
+              <tr>
+                <th>
+                  #
+                </th>
+                <th>
+                  User
+                </th>
+                <th>
+                  First name
+                </th>
+                <th>
+                  Email
+                </th>
+                <th>
+                  Block/Unblock
+                </th>
+              
+              </tr>
+            </thead>
+            <tbody>
+              <% users.forEach((users,index)=>{ %> 
+              <tr>
+                <td>
+                  <%- index+1 %> 
+                </td>
+                <td class="py-1" >
+                  <img style="border-radius:2cm !important;width: 50px;" src="../../images/faces/face1.jpg" alt="image"/>
+                </td>
+                <td>
+                 <%- users.name %> 
+                </td>
+                <td>
+                 <%- users.email %> 
+                </td>
+               
+               
+                <td>
+                  <% if(users.status){ %> 
+                    <a type="button" style="width:80px ;" href="/admin/blockUser/<%= users._id  %> " class="btn btn-success btn-sm btn-icon-text btn-icon-prepend">
+                      block
+                  </a>
+                    <% }else { %> 
+                    
+                    <a type="button" style="width:80px ;" href="/admin/unBlockUser/<%= users._id  %> " class="btn btn-danger btn-sm btn-icon-text  btn-icon-prepend">
+                      Unblock
+                  </a>
+                    <% } %> 
+                </td>
+              </tr>
+            <% }) %> 
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
