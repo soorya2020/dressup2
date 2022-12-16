@@ -32,7 +32,7 @@ exports.getRevenueByDay= () => {
                             _id: { '$dayOfMonth': '$orders.createdAt' },
                             totalRevenue: { $sum: { $multiply: ['$orders.productDetails.productsPrice', '$orders.productDetails.quantity'] } },
                             orders: { $sum: 1 },
-                            totalQuantity: { $first: '$orders.totalQuantity' }
+                            totalQuantity: { $first: '$orders.productDetails.quantity' }
                         }
                     },
                     {
@@ -94,7 +94,7 @@ exports.getRevenueByear =()=>{
                             _id: { '$year': '$orders.createdAt' },
                             totalRevenue: { $sum: { $multiply: ['$orders.productDetails.productsPrice', '$orders.productDetails.quantity'] } },
                             orders: { $sum: 1 },
-                            totalQuantity: { $sum: '$orders.totalQuantity' }
+                            totalQuantity: { $sum: '$orders.productDetails.quantity' }
                         }
                     },
                     {
@@ -146,7 +146,7 @@ exports.monthWiseSales= () => {
                             _id: {'$month':'$orders.createdAt'},
                             total: { $sum:{$multiply:['$orders.productDetails.productsPrice','$orders.productDetails.quantity']}},
                             orders: { $sum:1 },
-                            totalQuantity: { $first:'$orders.totalQuantity'}
+                            totalQuantity: { $first:'$orders.productDetails.quantity'}
                         }
                     },
 

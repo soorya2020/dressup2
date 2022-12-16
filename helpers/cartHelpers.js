@@ -17,11 +17,9 @@ paypal.configure({
 });
 
 module.exports = {
-
   findQuantity: (prodId, userId) => {
     return new Promise(async (resolve, reject) => {
       try {
-        
         let userCart = await db.carts.findOne({ user: userId });
         if (userCart) {
           let prodIndex = userCart.products.findIndex(
@@ -39,25 +37,24 @@ module.exports = {
           resolve({ status: false });
         }
       } catch (error) {
-        reject({status:false,error})
+        reject({ status: false, error });
       }
-    })
+    });
   },
-  
+
   addToCart: (prodId, userId) => {
     return new Promise(async (resolve, reject) => {
-      
       try {
-         let prodObj = {
-           item: prodId,
-           quantity: 1,
-         }
+        let prodObj = {
+          item: prodId,
+          quantity: 1,
+        };
         let userCart = await db.carts.findOne({ user: userId });
         if (userCart) {
           let prodExist = userCart.products.findIndex(
             (product) => product.item == prodId
           );
-  
+
           if (prodExist != -1) {
             db.carts
               .findOneAndUpdate(
@@ -71,9 +68,10 @@ module.exports = {
               )
               .then((response) => {
                 resolve(response);
-              }).catch((error)=>{
-                reject(error)
               })
+              .catch((error) => {
+                reject(error);
+              });
           } else {
             db.carts
               .updateOne(
@@ -84,26 +82,27 @@ module.exports = {
               )
               .then((response) => {
                 resolve();
-              }).catch((error)=>{
-                reject(error)
               })
+              .catch((error) => {
+                reject(error);
+              });
           }
         } else {
           let cartObj = {
             user: userId,
             products: [prodObj],
           };
-          let data = await db.carts(cartObj)
+          let data = await db.carts(cartObj);
           data.save((err, data) => {
             if (err) {
-              reject(err)
+              reject(err);
             } else {
-              resolve(data)
+              resolve(data);
             }
-          })
+          });
         }
       } catch (error) {
-        reject(error)
+        reject(error);
       }
     });
   },
@@ -133,7 +132,7 @@ module.exports = {
                 as: "productInfo",
               },
             },
-  
+
             {
               $project: {
                 item: 1,
@@ -145,12 +144,12 @@ module.exports = {
           ])
           .then((productInfo) => {
             resolve(productInfo);
-          }).catch((err)=>{
-            reject(err)
           })
-        
+          .catch((err) => {
+            reject(err);
+          });
       } catch (error) {
-        reject(error)
+        reject(error);
       }
     });
   },
@@ -192,60 +191,61 @@ module.exports = {
     });
   },
   getTotalAmount: (userId) => {
-      return new Promise((resolve, reject) => {
-
-        try {
-          
-          db.carts
-            .aggregate([
-              {
-                $match: { user: userId },
+    return new Promise((resolve, reject) => {
+      try {
+        db.carts
+          .aggregate([
+            {
+              $match: { user: userId },
+            },
+            {
+              $unwind: "$products",
+            },
+            {
+              $project: {
+                item: "$products.item",
+                quantity: "$products.quantity",
               },
-              {
-                $unwind: "$products",
+            },
+            {
+              $lookup: {
+                from: "products",
+                localField: "item",
+                foreignField: "_id",
+                as: "productInfo",
               },
-              {
-                $project: {
-                  item: "$products.item",
-                  quantity: "$products.quantity",
+            },
+            {
+              $project: {
+                item: 1,
+                quantity: 1,
+                product: { $arrayElemAt: ["$productInfo", 0] },
+              },
+            },
+            {
+              $group: {
+                _id: null,
+                total: {
+                  $sum: { $multiply: ["$quantity", "$product.offerPrice"] },
+                },
+                mrpTotal: {
+                  $sum: { $multiply: ["$quantity", "$product.price"] },
                 },
               },
-              {
-                $lookup: {
-                  from: "products",
-                  localField: "item",
-                  foreignField: "_id",
-                  as: "productInfo",
-                },
-              },
-              {
-                $project: {
-                  item: 1,
-                  quantity: 1,
-                  product: { $arrayElemAt: ["$productInfo", 0] },
-                },
-              },
-              {
-                $group: {
-                  _id: null,
-                  total: { $sum: { $multiply: ["$quantity", "$product.offerPrice"] } },
-                  mrpTotal: { $sum: { $multiply: ["$quantity", "$product.price"] } },
-                },
-              },
-            ])
-            .then((totalAmount) => {
-              resolve(totalAmount[0]);
-            }).catch((err)=>{
-              reject(err)
-            });
-        } catch (error) {
-          reject(error)
-        }
-      });
-   
+            },
+          ])
+          .then((totalAmount) => {
+            resolve(totalAmount[0]);
+          })
+          .catch((err) => {
+            reject(err);
+          });
+      } catch (error) {
+        reject(error);
+      }
+    });
   },
 
-  
   removeProduct: (data) => {
     return new Promise((resolve, reject) => {
       db.carts
@@ -260,8 +260,9 @@ module.exports = {
         )
         .then((response) => {
           resolve(response);
-        }).catch((error)=>{
-          reject(error)
+        })
+        .catch((error) => {
+          reject(error);
         });
     });
   },
@@ -271,10 +272,7 @@ module.exports = {
     });
   },
   placeOrder: (order, total, couponId) => {
-    
- 
     return new Promise(async (resolve, reject) => {
-
       let products = await db.carts.aggregate([
         {
           $match: { user: order.userId },
@@ -308,25 +306,21 @@ module.exports = {
             quantity: 1,
             productsName: "$cartItemsResult.name",
             productsPrice: "$cartItemsResult.offerPrice",
-            productsOfferPercentage:'$cartItemsResult.offerPercentage',
+            productsOfferPercentage: "$cartItemsResult.offerPercentage",
             orderStatus: "$cartItemsResult.status",
             imageName: "$cartItemsResult.img",
             return: "$cartItemsResult.return",
-            category:'$cartItemsResult.category'
+            category: "$cartItemsResult.category",
           },
         },
       ]);
 
-      let totalQuantity=0                           //total quantity
-      for(let i =0 ; i<products.length; i++){
-        totalQuantity+=products[i].quantity
-
+      let totalQuantity = 0; //total quantity
+      for (let i = 0; i < products.length; i++) {
+        totalQuantity += products[i].quantity;
       }
 
-     
-
       for (let i = 0; i <= products.length - 1; i++) {
-        
         db.products
           .updateOne(
             {
@@ -361,8 +355,6 @@ module.exports = {
       let addressExist = await db.addresses.find({ userId: order.userId });
 
       if (addressExist.length) {
-       
-
         db.addresses
           .find({
             "address.street": order.street,
@@ -370,9 +362,7 @@ module.exports = {
             userId: order.userId,
           })
           .then((res) => {
-           
             if (res.length == 0) {
-             
               // db.addresses(addressObj).save()
               db.addresses
                 .updateOne(
@@ -383,19 +373,14 @@ module.exports = {
                     $push: { address: addressData },
                   }
                 )
-                .then((data) => {
-                 
-                });
+                .then((data) => {});
             } else {
-             
             }
           });
       } else {
         db.addresses(addressObj)
           .save()
-          .then(() => {
-          
-          });
+          .then(() => {});
       }
 
       let orderAddress = {
@@ -409,9 +394,6 @@ module.exports = {
         email: order.email,
       };
 
-     
-
-      
       let orderData = {
         firstName: order.firstname,
         lastName: order.lastname,
@@ -419,7 +401,7 @@ module.exports = {
         paymentMethod: order.paymentMethod,
         productDetails: products,
         totalPrice: total,
-        totalQuantity:totalQuantity,
+        totalQuantity: totalQuantity,
         shippingAddress: orderAddress,
         createdAt: new Date(),
       };
@@ -444,38 +426,43 @@ module.exports = {
             console.log("order pushed");
           });
       } else {
-        
         let data = await db.orders(orderObj);
 
         await data.save();
-        console.log(data,"order saved");
+        console.log(data, "order saved");
       }
-      db.carts.deleteOne({ user: order.userId }).then((res) => {
-        if(couponId){
-          db.users.updateOne(
-            {
-              _id:order.userId,"coupon.couponId":ObjectId(couponId) 
-            },
-            {
-              $set:{
-                'coupon.$.status':true
-              }
-            }
-            ).then((d)=>{
-              resolve() 
-            }).catch((e)=>{
-              console.log(e,"somehting goene wrong wlide deleting cart");
-              reject()
-            });
-        }else{
-          resolve()
-        }
-      }).catch(()=>{
-        reject()
-      })
+      db.carts
+        .deleteOne({ user: order.userId })
+        .then((res) => {
+          if (couponId) {
+            db.users
+              .updateOne(
+                {
+                  _id: order.userId,
+                  "coupon.couponId": ObjectId(couponId),
+                },
+                {
+                  $set: {
+                    "coupon.$.status": true,
+                  },
+                }
+              )
+              .then((d) => {
+                resolve();
+              })
+              .catch((e) => {
+                console.log(e, "somehting goene wrong wlide deleting cart");
+                reject();
+              });
+          } else {
+            resolve();
+          }
+        })
+        .catch(() => {
+          reject();
+        });
     });
   },
-
 
   listAddress: (userId, addressId) => {
     return new Promise((resolve, reject) => {
@@ -496,67 +483,60 @@ module.exports = {
           ])
           .then((data) => {
             resolve(data);
-          }).catch((error)=>{
-            reject(error)
           })
-        
+          .catch((error) => {
+            reject(error);
+          });
       } catch (error) {
-        reject(error)
+        reject(error);
       }
     });
   },
 
   getOrders: (userId) => {
-   
     return new Promise(async (resolve, reject) => {
       try {
         let orders = await db.orders.find({ userId: userId });
-  
+
         resolve(orders[0]);
-        
       } catch (error) {
-          reject(error)
+        reject(error);
       }
     });
   },
-  getOrderDetails:(orderId,userId)=>{
-    
-
-    return new Promise(async(resolve,reject)=>{
-      
+  getOrderDetails: (orderId, userId) => {
+    return new Promise(async (resolve, reject) => {
       try {
-
         let orders = await db.orders.find({ userId: userId });
-        let orderIndex = orders[0].orders.findIndex((order) => order._id == orderId)
-        db.orders.aggregate([
-          {
-            $match:{userId:userId}
-          },
-          {
-            $unwind:"$orders"
-          },
-          {
-            $match:{'orders._id':ObjectId(orderId)  }
-          }
-        ]).then((data)=>{
-         
-          resolve(data)
-        }).catch((error)=>{
-          reject()
-        })
-
+        let orderIndex = orders[0].orders.findIndex(
+          (order) => order._id == orderId
+        );
+        db.orders
+          .aggregate([
+            {
+              $match: { userId: userId },
+            },
+            {
+              $unwind: "$orders",
+            },
+            {
+              $match: { "orders._id": ObjectId(orderId) },
+            },
+          ])
+          .then((data) => {
+            resolve(data);
+          })
+          .catch((error) => {
+            reject();
+          });
       } catch (error) {
-        reject()
-        
+        reject();
       }
-
-     
-    })
+    });
   },
   getAllOrders: () => {
     return new Promise(async (resolve, reject) => {
       try {
-        
         let orders = await db.orders.aggregate([
           {
             $unwind: "$orders",
@@ -564,23 +544,23 @@ module.exports = {
         ]);
         resolve(orders);
       } catch (error) {
-        reject(error)
+        reject(error);
       }
-    })
+    });
   },
   cancelOrder: (orderId, prodId) => {
     return new Promise(async (resolve, reject) => {
       try {
         let order = await db.orders.find({ "orders._id": orderId });
-  
+
         if (order) {
           let orderIndex = order[0].orders.findIndex(
             (order) => order._id == orderId
           );
-          let productIndex = order[0].orders[orderIndex].productDetails.findIndex(
-            (product) => product._id == prodId
-          );
-  
+          let productIndex = order[0].orders[
+            orderIndex
+          ].productDetails.findIndex((product) => product._id == prodId);
+
           db.orders
             .updateOne(
               {
@@ -596,15 +576,30 @@ module.exports = {
                 },
               }
             )
-            .then((data) => {
-              resolve({ status: true });
-            }).catch((error)=>{
-              reject(error)
+            .then(() => {
+              console.log("oder cancelled status updated");
+              db.products
+                .updateOne(
+                  { _id: prodId },
+                  {
+                    $inc: {
+                      stock:
+                        order[0].orders[orderIndex].productDetails[productIndex]
+                          .quantity,
+                    },
+                  }
+                )
+                .then((e) => {
+                 
+                  resolve({ status: true });
+                });
             })
+            .catch((error) => {
+              reject(error);
+            });
         }
-        
       } catch (error) {
-        reject(error)
+        reject(error);
       }
     });
   },
@@ -647,16 +642,15 @@ module.exports = {
     });
   },
 
-  changePaymentStatus: (orderId, userId,value) => {
+  changePaymentStatus: (orderId, userId, value) => {
     return new Promise(async (resolve, reject) => {
       try {
-        
         let orders = await db.orders.find({ userId: userId });
-  
+
         let orderIndex = orders[0].orders.findIndex(
           (order) => order._id == "" + orderId
         );
-  
+
         console.log(orderIndex, "" + orderId, "my order index and order id");
         db.orders
           .updateOne(
@@ -679,7 +673,7 @@ module.exports = {
             reject();
           });
       } catch (error) {
-        reject(error)
+        reject(error);
       }
     });
   },
@@ -707,7 +701,6 @@ module.exports = {
     let updateValue = parseInt(value);
     return new Promise(async (resolve, reject) => {
       let order = await db.orders.findOne({ "orders._id": orderId });
-  
 
       if (order) {
         let orderIndex = order.orders.findIndex(
@@ -716,7 +709,7 @@ module.exports = {
         let productIndex = order.orders[orderIndex].productDetails.findIndex(
           (product) => product._id == prodId
         );
-        console.log(order.orders[orderIndex],"test soorya");
+        console.log(order.orders[orderIndex], "test soorya");
 
         db.orders
           .updateOne(
@@ -735,22 +728,24 @@ module.exports = {
           )
           .then((data) => {
             console.log(data, "line 560 cart helpers");
-            if(order.orders[orderIndex].paymentMethod=='COD' && updateValue==4){
-              db.orders.updateOne(
-                {
-                  "orders._id": orderId,
-                },
-                {
-                  $set: {
-                    ["orders." + orderIndex + ".paymentStatus"]: 1,
+            if (
+              order.orders[orderIndex].paymentMethod == "COD" &&
+              updateValue == 4
+            ) {
+              db.orders
+                .updateOne(
+                  {
+                    "orders._id": orderId,
                   },
-                }
-              )
-              .then((data) => {
-               
-            
-                resolve();
-              })
+                  {
+                    $set: {
+                      ["orders." + orderIndex + ".paymentStatus"]: 1,
+                    },
+                  }
+                )
+                .then((data) => {
+                  resolve();
+                });
             }
             resolve({ status: true });
           });
@@ -847,82 +842,87 @@ module.exports = {
           );
           console.log(orderIndex, prodIndex, "myindexes");
 
-          let thisOrder=await db.orders.findOne({'orders._id':data.orderId})
+          let thisOrder = await db.orders.findOne({
+            "orders._id": data.orderId,
+          });
 
-          if(thisOrder.orders[orderIndex].productDetails[prodIndex].orderStatus==4){
-
-              db.orders
-                .updateOne(
-                  { "orders._id": data.orderId },
-                  {
-                    $set: {
-                      ["orders." +
-                      orderIndex +
-                      ".productDetails." +
-                      prodIndex +
-                      ".orderStatus"]: 6,//6 for return 
-                    },
-                  }
-                )
-                .then((e) => {
-                  console.log(e);
-                  console.log(userId,'this ismy user id');
-                });
-              db.orders
-                .aggregate([
-                  {
-                    $match: { userId: userId  },
+          if (
+            thisOrder.orders[orderIndex].productDetails[prodIndex]
+              .orderStatus == 4
+          ) {
+            db.orders
+              .updateOne(
+                { "orders._id": data.orderId },
+                {
+                  $set: {
+                    ["orders." +
+                    orderIndex +
+                    ".productDetails." +
+                    prodIndex +
+                    ".orderStatus"]: 6, //6 for return
                   },
-                  {
-                    $unwind: "$orders",
+                }
+              )
+              .then((e) => {
+                console.log(e);
+                console.log(userId, "this ismy user id");
+              });
+            db.orders
+              .aggregate([
+                {
+                  $match: { userId: userId },
+                },
+                {
+                  $unwind: "$orders",
+                },
+                {
+                  $unwind: "$orders.productDetails",
+                },
+                {
+                  $match: {
+                    $and: [
+                      {
+                        "orders._id": ObjectId(data.orderId),
+                        "orders.productDetails._id": ObjectId(data.prodId),
+                      },
+                    ],
                   },
-                  {
-                    $unwind: "$orders.productDetails",
-                  },
-                  {
-                    $match: {
-                      $and: [
-                        {
-                          "orders._id": ObjectId(data.orderId) ,
-                          "orders.productDetails._id":ObjectId(data.prodId),
-                        },
-                      ],
-                    },
-                  },
-                ])
-                .then((data) => {
-                  let priceToWallet = {
-                    price: 0,
-                  };
-                  let totalPrice =
-                    data[0]?.orders?.productDetails?.quantity * data[0]?.orders?.productDetails?.productsPrice;
-                  //check if coupon is applied and make changes on the refund
-                  priceToWallet.price = parseInt(totalPrice) 
-                  console.log(priceToWallet, "this is my wallet proce");
-                  db.products
-                    .updateOne(
-                      { _id: data.prodId },
-                      { $inc: { stock: data[0].orders.productDetails.quantity } }
-                    )
-                    .then((e) => {
-                      console.log(e, "product stock updated after product return");
-                    });
-                  db.users
-                    .updateOne(
-                      { _id: userId },
-                      { $push: { wallet: totalPrice } }
-                    )
-                    .then((e) => {
-                      console.log(e, "price adde to wallet");
-                      resolve({ status: true });
-                    });
-                });
-          }else{
-            console.log('product already returned');
-            resolve({staus:false})
+                },
+              ])
+              .then((data) => {
+                let priceToWallet = {
+                  price: 0,
+                };
+                let totalPrice =
+                  data[0]?.orders?.productDetails?.quantity *
+                  data[0]?.orders?.productDetails?.productsPrice;
+                //check if coupon is applied and make changes on the refund
+                priceToWallet.price = parseInt(totalPrice);
+                console.log(priceToWallet, "this is my wallet proce");
+                db.products
+                  .updateOne(
+                    { _id: data.prodId },
+                    { $inc: { stock: data[0].orders.productDetails.quantity } }
+                  )
+                  .then((e) => {
+                    console.log(
+                      e,
+                      "product stock updated after product return"
+                    );
+                  });
+                db.users
+                  .updateOne({ _id: userId }, { $push: { wallet: totalPrice } })
+                  .then((e) => {
+                    console.log(e, "price adde to wallet");
+                    resolve({ status: true });
+                  });
+              });
+          } else {
+            console.log("product already returned");
+            resolve({ staus: false });
           }
-        }else{
-            resolve({staus:false})
+        } else {
+          resolve({ staus: false });
         }
       } catch (error) {
         console.log(error);
@@ -930,8 +930,6 @@ module.exports = {
       }
     });
   },
-  
-
 };
 
 module.exports.getCartCount = (userId) => {
@@ -939,7 +937,7 @@ module.exports.getCartCount = (userId) => {
     try {
       let count = 0;
       let cart = await db.carts.findOne({ user: userId });
-  
+
       if (cart) {
         for (i = 0; i < cart.products.length; i++) {
           count += cart.products[i].quantity;
@@ -947,21 +945,60 @@ module.exports.getCartCount = (userId) => {
       }
       count = parseInt(count);
       resolve(count);
-      
     } catch (error) {
-      reject(error)
+      reject(error);
     }
-  })
-}
+  });
+};
 
 module.exports.getAddress = (userId) => {
   return new Promise(async (resolve, reject) => {
     try {
       let address = await db.addresses.find({ userId: userId });
       resolve(address);
+    } catch (error) {
+      reject(error);
+    }
+  });
+};
+
+module.exports.addToWallet = (orderId, prodId, userId) => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      let order = await db.orders.findOne({ userId: userId });
+      if (order) {
+        let orderIndex = order.orders.findIndex(
+          (index) => index._id == orderId
+        );
+        let prodIndex = order.orders[orderIndex].productDetails.findIndex(
+          (index) => index._id == prodId
+        )
+        console.log(orderIndex, prodIndex, "myindexes");
       
+        let thisOrder = await db.orders.findOne({ "orders._id": orderId });
+        if (thisOrder.orders[orderIndex].paymentMethod == "COD") {
+          resolve({ status: true });
+        } else {
+          let priceToWallet = {
+            price: 0,
+          };
+          let totalPrice =
+          thisOrder.orders[orderIndex]?.productDetails[prodIndex]?.quantity *
+          thisOrder.orders[orderIndex]?.productDetails[prodIndex]?.productsPrice;
+          priceToWallet.price = parseInt(totalPrice);
+
+          db.users
+            .updateOne({ _id: userId }, { $push: { wallet: totalPrice } })
+            .then((e) => {
+              console.log(e, "price adde to wallet");
+              resolve({ status: true });
+            }).catch((error)=>{
+              reject(error)
+            })
+        }
+      }
     } catch (error) {
       reject(error)
     }
   });
-}
+};

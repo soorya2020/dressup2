@@ -235,12 +235,24 @@ module.exports = {
       cartHelpers
         .cancelOrder(req.body.orderId, req.body.prodId)
         .then((response) => {
-          res.json(response);
+          if(response.status){
+            cartHelpers.addToWallet(req.body.orderId, req.body.prodId,req.session.user._id).then((response)=>{
+              console.log('soory added to wallet');
+              res.json(response);
+            }).catch((error)=>{
+        console.log(error,'soorya error');
+
+              res.status(500).send({value:false,error:error.message})
+            })
+          }
         }).catch((error)=>{
+        console.log(error,'soorya error');
+
           res.status(500).send({value:false,error:error.message})
         })
       
     } catch (error) {
+      console.log(error,'soorya error');
       res.status(500).send({value:false,error:error.message})
     }
   },

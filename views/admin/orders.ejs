@@ -182,7 +182,7 @@ $(document).ready(function(){
                         <td ><%= index+1 %>  </td>
                         <td class=""><br><strong>Name:</strong>  <%= element.orders.firstName %>   </td>
                         <td><br><%= element.orders._id  %>  </td>
-                        <td class="text-center"><br><%= element.orders.productDetails.length %></td>
+                        <td class="text-center"><br><%= element.orders.totalQuantity %></td>
                         
                         <td class="text-center"><br><%= element.orders.totalPrice%> </td>
                         <td><br><%= dataToReadable(element.orders.createdAt) %></td>
@@ -190,6 +190,7 @@ $(document).ready(function(){
                         <% if(element.orders.paymentStatus==1) {%>
                             <td class="text-center" style="background-color:rgb(105, 241, 105) ;"><br> SUCCESS</td>
                             <% }else {%>
+                               
                                 <td class="text-center text-light" style="background-color:rgb(244, 51, 51) ;"><br> PENDING</td>
                                 <% } %>   
                         <td><a class="btn btn-secondary px-5 text-white" href="/admin/single-order/<%= element.orders._id %>  ">view</a> </td>
