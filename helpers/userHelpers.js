@@ -7,23 +7,34 @@ const { ObjectID } = require('bson')
 module.exports = {
     doSignup: (userData) => {
         return new Promise(async (resolve, reject) => {
-            db.users.find({ email: userData.email }).then(async (data) => {
-                let response={}
-                if (data.length!=0) {
-                    resolve({status:false})
-                } else {
-                    userData.password = await bcrypt.hash(userData.password, 10)
-                    let data=await db.users(userData)
-                    data.save()
-                        response.value = userData
-                        response.status = true
-                        response.data = data.insertedId
-                        resolve(response)
-                    
+            try {
 
-
-                }
-            })
+                    db.users.find({ "$or": [ { email: userData.email }, { mobile: userData.mobile} ] }).then(async (data) => {
+   
+   
+                       let response={}
+                       if (data.length!=0) {
+                           resolve({status:false})
+                       } else {
+                           userData.password = await bcrypt.hash(userData.password, 10)
+                           let data=await db.users(userData)
+                           data.save()
+                               response.value = userData
+                               response.status = true
+                               response.data = data.insertedId
+                               resolve(response)
+                           
+       
+       
+                       }
+                   }).catch((error)=>{
+                       reject(error)
+                   })
+                
+                
+            } catch (error) {
+                reject(error)
+            }
 
 
 

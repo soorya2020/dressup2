@@ -28,7 +28,7 @@ const {
   updateUser,
 } = require("../controllers/auth");
 
-const { shop,shopByQuery, singleProduct } = require("../controllers/product");
+const { shop,getProducts, singleProduct } = require("../controllers/product");
 const {
   getCart,
   findProdQuantity,
@@ -85,6 +85,7 @@ router.get("/verify", verifyOtp);
 
 //shop
 router.get("/shop", shop)
+router.get("/getProducts", getProducts)
 
 router.get("/single-product/:id", cartCount, singleProduct);
 

@@ -13,6 +13,7 @@ var footer = true;
 
 module.exports={
   shop:async(req, res) => {
+   
       let user=req.session.user
       let cartCount=await cartHelpers.getCartCount(req?.session?.user?._id)
         productHelpers.getAllProducts(req.query).then((products) => {
@@ -35,6 +36,20 @@ module.exports={
           
         }).catch((error)=>{
           res.render('error',{errmessage:error.message})
+        })
+      },
+    getProducts:async(req, res) => {
+   
+     
+      
+        productHelpers.getAllProducts(req.query).then((products) => {
+     
+        
+       
+          res.send(products)
+          
+        }).catch((error)=>{
+          res.status(500).send({error:error.message})
         })
       },
   singleProduct:(req, res) => {

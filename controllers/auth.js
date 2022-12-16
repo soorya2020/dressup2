@@ -40,7 +40,7 @@ module.exports = {
   signup: (req, res) => {
     userHelpers.doSignup(req.body).then((response) => {
       if (!response.status) {
-        res.send({ value: "failed" });
+        res.send({ value: "failed",error:'user already exist' });
       } else {
         // req.session.loggedIn = true; 
         res.send({ value: "success" });

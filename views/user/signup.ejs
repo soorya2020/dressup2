@@ -123,47 +123,56 @@ function validation(){
 
     //name validation
     if(nameValue==''){
-        err1.innerText='This field is required'
+      
+        Swal.fire('Name field is required')
         flag=2
     }else if(!nameValue.match(/[a-zA-Z]/)){
-        err1.innerText='Enter a valid name'
+        
+        Swal.fire('Enter a valid name')
         flag=2
     }else if(nameValue.length<3){
-        err1.innerText='name should be atleast 3 characters'
+      
+        Swal.fire('name should be atleast 3 characters')
         flag=2
     }
 
     //email validatio
-    if (emailValue=='') {
-        err2.innerText='This field is required'
+    else if (emailValue=='') {
+       
+        Swal.fire('email is required')
         flag=2
     }else if (!emailValue.match(/^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/)) {
-        err2.innerText='Please enter a valid email'
+        Swal.fire('Please enter a valid email')
         flag=2
     }
 
     //password validation
-    if(passwordValue==''){
-        err3.innerText='This field is required'
+    else if(passwordValue==''){
+      
+        Swal.fire('password is required')
         flag=2
     }else if(passwordValue.length<5){
-        err3.innerText='Password must contain atleast 5 charachters'
+     
+        Swal.fire('Password must contain atleast 5 charachters')
         flad=2
     }else if (passwordValue!=password2Value) {
-        err3.innerText='password does not match'
+       
+        Swal.fire('password does not match')
         flag=2
     }    
 
     //mobile validation
-    if(!mobileValue){
-        err5.innerText='This field is required'
+    else if(!mobileValue){
+        err5.innerText=''
+        Swal.fire('mobile is required')
         flag=2
     }else if(!mobileValue.match(/^[6-9]\d{9}$/)){
-        err5.innerText='Enter a valid phone number'
+      
+        Swal.fire('Enter a valid phone number')
         flag=2
     }
 
-    if(flag==1){
+    else if(flag==1){
         submit(nameValue,emailValue,passwordValue,mobileValue)
     }
 
@@ -200,7 +209,11 @@ function validation(){
                 }, 1500);
             }else{
                 let error=document.getElementById('error')
-                error.innerText='user already exist'
+                Swal.fire(
+                  'User already exist',
+                  'try with diffrernt mobile and email',
+                  'question'
+                )
                 
             }
         })
