@@ -213,8 +213,8 @@
             <div class="col-md-6 mb-4 stretch-card transparent">
               <div class="card card-tale">
                 <div class="card-body">
-                  <p class="mb-4">Today’s Bookings</p>
-                  <p class="fs-30 mb-2">4006</p>
+                  <p class="mb-4">Today’s Orders</p>
+                  <p class="fs-30 mb-2" id="">4006</p>
                   <p>10.00% (30 days)</p>
                 </div>
               </div>
@@ -329,7 +329,7 @@
         </div>
         <div class="col-md-6 grid-margin stretch-card">
           <div class="card">
-            <div class="card-body">
+            <!-- <div class="card-body">
               <div class="d-flex justify-content-between">
                 <p class="card-title">Sales Report</p>
                 <a href="#" class="text-info">View all</a>
@@ -339,7 +339,7 @@
           
               <canvas id="pi-sales-chart"></canvas>
 
-            </div>
+            </div> -->
           </div>
         </div>
       </div>
@@ -969,6 +969,20 @@
             let price=res.priceStat
             let daily=res.daily
             let year=res.year
+            // console.log(year,'my yearly data');
+
+          //   let yearArr=[]
+          //   for(let i=0;i<5;i++){
+          //     for(let j=0;j<=30;j++){
+          //       if(year[j]?._id==i){
+          //       yearArr[i]=daily[j]?.totalRevenue
+          //       break
+          //     }else{
+          //         yearArr[i]=0
+          //       }
+          //   }
+          // }
+          // console.log(yearArr,'uear data afeter loop')
            
 
             let dailyArr=[]
@@ -995,7 +1009,7 @@
                 }
               }
             }
-         console.log(arrayForMonth);
+        //  console.log(arrayForMonth);
             
             // [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31]
             var xValues = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
@@ -1039,14 +1053,14 @@
         
 
 
-          var xValues = [year[0]._id,year[1]._id,year[2]._id,year[3]._id,year[4]._id];
+          var xValues = [2018,2019,2020,2021,2022];
 
             new Chart("yearly-sales-chart", {
               type: "bar",
               data: {
                 labels: xValues,
                 datasets: [{
-                  data: [year[0].totalRevenue,year[1].totalRevenue,year[2].totalRevenue,year[3].totalRevenue,year[4].totalRevenue],
+                  data: [0,0,0,0,year[0].totalRevenue],
                   borderColor: "green",
                   fill: false
                 }]

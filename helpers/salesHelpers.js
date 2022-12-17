@@ -111,7 +111,7 @@ exports.monthWiseSales= () => {
         try {
                 let year=new Date()
                 year=year.getFullYear()
-                console.log(year,'this is my uear');
+                // console.log(year,'this is my uear');
       
                 await db.orders.aggregate([
                     {
