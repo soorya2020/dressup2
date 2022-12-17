@@ -8,6 +8,7 @@ const paypal = require("@paypal/checkout-server-sdk");
 const couponHelpers = require("../helpers/couponHelpers");
 
 const { ObjectId } = require("mongodb");
+const product = require("./product");
 const Environment =
   process.env.NODE_ENV === "production"
     ? paypal.core.LiveEnvironment
@@ -29,8 +30,9 @@ module.exports = {
     try {
       productHelpers.getBanners().then((banners) => {
         productHelpers.getSubBanners().then((subBanners)=>{
-          console.log(subBanners,'asdfh');
-          res.render("index", { nav, footer, banners: banners,subBanners:subBanners });
+          productHelpers.getAllProducts().then((products)=>{
+            res.render("index", { nav, footer, banners: banners,subBanners:subBanners,products:products });
+          })
         })
       }).catch((err)=>{
         reject(err)
