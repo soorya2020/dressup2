@@ -62,14 +62,14 @@
           <% }) %> 
           </tbody>
         </table>
-      
-        <h4 class="card-title mt-5">Category Banners Table</h4>
 
-        <a type="button " href="/admin/add-main-banner" class="btn btn-success btn-sm btn-icon-text btn-icon-prepend">
-          Add Catagory Banner
-         </a>
+<br><hr>
 
-         <table class="table">
+        <a type="button " href="/admin/add-sub-banner" class="btn btn-success btn-sm btn-icon-text btn-icon-prepend">
+         Add Sub Banner
+        </a>
+
+        <table class="table table-striped">
           <thead>
             <tr>
               <th scope="col">#</th>
@@ -78,19 +78,51 @@
               <th scope="col">Sub Title</th>
               <th scope="col">Description</th>
               <th scope="col">Offer</th>
+              <th scope="col">Action</th>
+           
+            
             </tr>
           </thead>
           <tbody>
+            <% SubBanners?.forEach((banner,index)=>{ %> 
             <tr>
-              <th scope="row">1</th>
-              <td>Mark</td>
-              <td>Otto</td>
-              <td>@mdo</td>
-              <td>Otto</td>
-              <td>@mdo</td>
+              <td>
+                <%- index+1 %> 
+              </td>
+              <td class="py-1" >
+                <img style="width: 300px;" src="/assets/banner-images/<%= banner?.image%>" alt="image"/>
+              </td>
+              <td>
+               <%- banner?.title %> 
+              </td>
+              <td>
+               <%- banner?.subtitle %> 
+              </td>
+              <td>
+               <%- banner?.description %> 
+              </td>
+              <td>
+               <%- banner?.offer %> 
+              </td>
+             
+             
+              <td>
+
+       
+                
+                <a type="button" style="width:80px ;" href="/admin/delete-sub-banner/<%= banner._id  %> " onclick=" return confirm('are you sure')" class="btn btn-danger btn-sm btn-icon-text  btn-icon-prepend">
+                  delete
+              </a>
+                  
+                
+              </td>
             </tr>
+          <% }) %> 
           </tbody>
         </table>
+
+
+
 
       </div>
     </div>

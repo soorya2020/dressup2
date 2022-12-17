@@ -496,10 +496,12 @@ module.exports = {
   getOrders: (userId) => {
     return new Promise(async (resolve, reject) => {
       try {
+       
         let orders = await db.orders.find({ userId: userId });
 
         resolve(orders[0]);
       } catch (error) {
+        console.log(error);
         reject(error);
       }
     });

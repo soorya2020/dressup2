@@ -84,7 +84,7 @@
                   </table>
                   <button class="btn btn-primary mt-5" onclick="dailyReport()">Download PDF</button>
             </div>
-
+          <% console.log(monthlyWise,'test1')%>
             <div class="tab-pane" id="monthly" role="tabpanel">
              
                 <table id="monthly-table" class="table table-striped">
@@ -105,10 +105,10 @@
                     <tbody>
                         <% monthlyWise.forEach((data,index)=>{  %> 
                       <tr>
-                        <th scope="row"><%= mothToMonth(index)  %> </th>
+                        <th scope="row"><%= mothToMonth(data._id)  %> </th>
                         <td>Rs.<%= data.total %></td>
+                        <td><%= data.totalQuantity  %> </td>
                         <td><%=data.orders  %> </td>
-                        <td><%= data.count  %> </td>
                       </tr>
                       <% }) %> 
                       

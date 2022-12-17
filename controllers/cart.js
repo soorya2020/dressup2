@@ -28,7 +28,10 @@ module.exports = {
   getHome: async function (req, res) {
     try {
       productHelpers.getBanners().then((banners) => {
-        res.render("index", { nav, footer, banners: banners });
+        productHelpers.getSubBanners().then((subBanners)=>{
+          console.log(subBanners,'asdfh');
+          res.render("index", { nav, footer, banners: banners,subBanners:subBanners });
+        })
       }).catch((err)=>{
         reject(err)
       })
@@ -207,10 +210,12 @@ module.exports = {
       cartHelpers.getOrders(userId).then((orders) => {
         res.render("user/neworder", { nav, orders });
       }).catch((err)=>{
+        console.log(err);
         res.render('error',{errmessage:err})
       })
       
     } catch (error) {
+      console.log(error);
       res.render('error',{errmessage:error})
     }
   },

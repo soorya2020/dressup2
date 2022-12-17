@@ -97,6 +97,13 @@ module.exports = {
         resolve()
     })
   },
+  addSubBanner:(bannerData)=>{
+    return new Promise(async(resolve,reject)=>{
+        let data = await db.SubBanners(bannerData)
+        await data.save()
+        resolve()
+    })
+  },
   getBanners:()=>{
     
       return new Promise((resolve,reject)=>{
@@ -113,9 +120,35 @@ module.exports = {
       })
    
   },
+  getSubBanners:()=>{
+    
+      return new Promise((resolve,reject)=>{
+        try {
+          
+          db.SubBanners.find({}).then((data)=>{
+            resolve(data)
+          }).catch((error)=>{
+            console.log(error);
+          })
+        } catch (error) {
+          
+        }
+      })
+   
+  },
   removeMainBanner:(bannerId)=>{
     return new Promise((resolve,reject)=>{
       db.banners.deleteOne({_id:bannerId}).then((d)=>{
+        
+        resolve(d)
+      }).catch((e)=>{
+        reject(e)
+      })
+    })
+  },
+  removeSubBanner:(bannerId)=>{
+    return new Promise((resolve,reject)=>{
+      db.SubBanners.deleteOne({_id:bannerId}).then((d)=>{
         resolve(d)
       }).catch((e)=>{
         reject(e)

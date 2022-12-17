@@ -32,7 +32,7 @@ exports.getRevenueByDay= () => {
                             _id: { '$dayOfMonth': '$orders.createdAt' },
                             totalRevenue: { $sum: { $multiply: ['$orders.productDetails.productsPrice', '$orders.productDetails.quantity'] } },
                             orders: { $sum: 1 },
-                            totalQuantity: { $first: '$orders.productDetails.quantity' }
+                            totalQuantity: { $sum: '$orders.productDetails.quantity' }
                         }
                     },
                     {
@@ -42,19 +42,7 @@ exports.getRevenueByDay= () => {
                     }
 
                 ]).then((data) => {
-                    // for(let i=0;i<=data.length;i++){
-                    //     if(data[i]._id!=i+1){
-                    //         data[i]={
-                    //             _id:i+1,
-                    //             totalRevenue:data[i].totalRevenue,
-                    //             orders:data[i].orders,
-                    //             totalQuantity:data[i].totalQuantity
-                    //         }
-                    //     }else{
-                            
-                    //     }
-                    // }
-                    
+                    // console.log(data,'this is my daily sales repoert');
                     resolve(data)
                 }).catch((e) => {
                     console.log('error in catch');
@@ -104,7 +92,7 @@ exports.getRevenueByear =()=>{
                     }
 
                 ]).then((data) => {
-                    console.log(data);
+                    
                     resolve(data)
                 }).catch((e) => {
                     console.log('error in catch');
@@ -146,12 +134,16 @@ exports.monthWiseSales= () => {
                             _id: {'$month':'$orders.createdAt'},
                             total: { $sum:{$multiply:['$orders.productDetails.productsPrice','$orders.productDetails.quantity']}},
                             orders: { $sum:1 },
-                            totalQuantity: { $first:'$orders.productDetails.quantity'}
+                            totalQuantity: { $sum:'$orders.productDetails.quantity'}
                         }
                     },
-
+                    {
+                        $sort: {
+                            '_id': 1
+                        }
+                    }
                 ]).then((monthlyData) => {
-              
+            //   console.log(monthlyData,'this is my  onthly data');
                     resolve(monthlyData)
                 }).catch((error)=>{
                     resolve(error)

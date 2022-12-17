@@ -6,10 +6,11 @@ const voucher_codes = require('voucher-code-generator');
 module.exports={
     getBanner:async(req,res)=>{
         let banners=await db.banners.find({})
-        res.render('admin/banner',{layout,banners})
+        let SubBanners=await db.SubBanners.find({})
+        res.render('admin/banner',{layout,banners,SubBanners})
     },
     getMainBanner:(req,res)=>{
-        res.render('admin/mainBanner',{layout})
+        res.render('admin/add-sub-banner',{layout})
     },
     addMainBanner:(req,res)=>{
         const files=req.files
@@ -24,9 +25,32 @@ module.exports={
         })
         
     },
+    addSubBanner:(req,res)=>{
+        const files=req.files
+        const fileName=files.map((file)=>{
+            return file.filename
+        })
+        const bannerData=req.body
+        bannerData.image=fileName
+        console.log(bannerData,'this is my data');
+        productHelpers.addSubBanner(bannerData).then(()=>{
+            res.redirect('/admin/banner')
+        })
+        
+    },
     deleteBanner:(req,res)=>{
         let bannerId=req.params.id
         productHelpers.removeMainBanner(bannerId).then((data)=>{
+            // res.send({status:true})
+            res.redirect('/admin/banner')
+        }).catch((error)=>{
+            res.send({status:false,error:error})
+        })
+    },
+    deleteSubBanner:(req,res)=>{
+     
+        let bannerId=req.params.id
+        productHelpers.removeSubBanner(bannerId).then((data)=>{
             // res.send({status:true})
             res.redirect('/admin/banner')
         }).catch((error)=>{

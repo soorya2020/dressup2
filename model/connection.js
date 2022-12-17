@@ -136,6 +136,15 @@ module.exports.banners=db.model('banner',new mongoose.Schema({
     image:Array
 }))
 
+module.exports.SubBanners=db.model('subbanner',new mongoose.Schema({
+    title:String,
+    subtitle:String,
+    description:String,
+    offer:String,
+    url:String,
+    image:Array
+}))
+
 module.exports.coupons= db.model("coupons",new mongoose.Schema({
     couponName:String,
     expiry:{
