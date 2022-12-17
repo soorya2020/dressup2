@@ -183,7 +183,7 @@
 <% products.forEach(product=>{ %> 
                         <div class="product product-2">
                             <figure class="product-media">
-                                <a href="product.html">
+                                <a href="single-product/<%= product._id  %>">
                                     <img src="/product-images/<%= product.img[0]  %> " alt="Product image"
                                         class="product-image">
                                     <img src="/product-images/<%= product.img[1]  %> " alt="Product image"
@@ -204,7 +204,7 @@
                                 <div class="product-cat">
                                     <a href="#">Shoes</a>
                                 </div><!-- End .product-cat -->
-                                <h3 class="product-title"><a href="product.html">Sandals</a></h3>
+                                <h3 class="product-title"><a href="shop/<%= product._id  %> ">Sandals</a></h3>
                                 <!-- End .product-title -->
                                 <div class="product-price">
                                     <span class="new-price">Now ₹<%= product.offerPrice  %> </span>
