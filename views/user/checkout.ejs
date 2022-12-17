@@ -776,7 +776,7 @@ return `${isNaN(dd)?'00':dd}-${monthText}-${isNaN(yyyy)?'0000':yyyy}`
                   </div><!-- End .card -->
                 </div><!-- End .accordion -->
                 <div id="paypal-button-container"></div>
-                <button type="button" class="btn btn-outline-primary-2 btn-order btn-block" onclick="validate()">
+                <button id="checkOutBtn" type="button" class="btn btn-outline-primary-2 btn-order btn-block" onclick="validate()">
                   <span class="btn-text">Place Order</span>
 
                   <span class="btn-hover-text">Proceed to Checkout</span>
@@ -798,6 +798,8 @@ return `${isNaN(dd)?'00':dd}-${monthText}-${isNaN(yyyy)?'0000':yyyy}`
 <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
 <script>
   function validate(couponId) {
+
+    document.getElementById('checkOutBtn').setAttribute('disabled','')
 
     const firstname = document.getElementById('firstname')
     const lastname = document.getElementById('lastname')
